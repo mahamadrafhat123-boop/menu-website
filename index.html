@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">مێنیووی قاوەخانە - Coffee Menu</title>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+        const SUPABASE_URL = 'https://qenwuxfbovtlczhkkszx.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_8lR8mXsyLU2Hyb1cGxuSMg_JbqimPlb';
+
+        window.supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.initApp === 'function') {
+                window.initApp();
+            }
+        });
+    </script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        
+        body { 
+            background-color: #121212;
+            color: #f2e9e1; 
+            padding-bottom: 80px; 
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.light-mode {
+            background-color: #f5ebe0;
+            color: #2c160b;
+        }
+        body.light-mode .top-bar { background: #e3d5ca; border-bottom: 1px solid #d5bdaf; }
+        body.light-mode .lang-switcher select { background: #f5ebe0; color: #2c160b; border-color: #b0a69f; }
+        body.light-mode .info-card-header { background: #e3d5ca; border-color: #b0a69f; color: #2c160b; }
+        body.light-mode .search-box { background: #fff; color: #2c160b; border-color: #b0a69f; }
+        body.light-mode nav button { background: #e3d5ca; color: #2c160b; border-color: #b0a69f; }
+        body.light-mode nav button.active { background: #8c5830; color: #fff; }
+        body.light-mode .admin-toggle-btn { background: #e3d5ca; color: #2c160b; border-color: #b0a69f; }
+        body.light-mode .admin-section { background: #e3d5ca; border-color: #b0a69f; }
+        body.light-mode .admin-section label { color: #2c160b; }
+        body.light-mode .admin-section input, body.light-mode .admin-section select { background: #fff; color: #2c160b; border-color: #b0a69f; }
+        body.light-mode .item-card { background: #faf0e6; border-color: #d5bdaf; }
+        body.light-mode .item-title { color: #2c160b; }
+        body.light-mode .item-desc { color: #5c4033; }
+        body.light-mode .item-price { color: #8c5830; }
+        body.light-mode .special-coffee-banner { background: #e3d5ca; border-color: #d5bdaf; color: #2c160b; }
+        body.light-mode .music-section { background: #e3d5ca; border-color: #d5bdaf; }
+        body.light-mode .music-text-title { color: #2c160b; }
+        body.light-mode .music-text-sub { color: #5c4033; }
+        body.light-mode .reviews-section { background: #e3d5ca; border-color: #d5bdaf; }
+        body.light-mode .reviews-title { color: #2c160b; }
+        body.light-mode .review-card { background: #faf0e6; border-color: #d5bdaf; }
+        body.light-mode .review-author { color: #2c160b; }
+        body.light-mode .review-text { color: #5c4033; }
+        body.light-mode .review-form-box { background: #faf0e6; border-color: #b0a69f; }
+        body.light-mode footer { background: #e3d5ca; border-top: 1px solid #d5bdaf; }
+        body.light-mode .social-btn { background: #f5ebe0; color: #2c160b; border-color: #b0a69f; }
+
+        #splashScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #1a0f0a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .splash-logo {
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-size: 3.5rem;
+            color: #d4a373;
+            animation: pulse 1.5s infinite;
+        }
+        .splash-text { color: #e3d5ca; margin-top: 10px; font-size: 1.1rem; letter-spacing: 1px; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
+
+        #successBanner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #27ae60;
+            color: white;
+            text-align: center;
+            padding: 14px;
+            font-weight: bold;
+            font-size: 1.05rem;
+            z-index: 3000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            animation: slideDown 0.4s ease;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 20px;
+            background: #1a0f0a;
+            border-bottom: 1px solid #3d2314;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .top-bar-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+        .lang-switcher select {
+            background: #2c160b;
+            color: #d4a373;
+            border: 1px solid #5c3a21;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .theme-toggle-btn, .table-badge-btn {
+            background: #2c160b;
+            color: #d4a373;
+            border: 1px solid #5c3a21;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .welcome-ticker {
+            background: #1f1209;
+            color: #ffffff;
+            padding: 10px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.95rem;
+            overflow: hidden;
+            white-space: nowrap;
+            border-top: 1px solid #4a2814;
+            border-bottom: 1px solid #4a2814;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .welcome-ticker span {
+            display: inline-block;
+            animation: marquee 22s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .actions-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .action-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+        .action-btn:active { transform: scale(0.98); }
+        .btn-bill { background-color: #e67e22; }
+
+        .floating-cart-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #d4a373;
+            color: #2c160b;
+            border: none;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+        .floating-cart-btn:hover { transform: scale(1.1); }
+        .cart-counter {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #a43030;
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .cart-content {
+            background: #23140a;
+            border: 1px solid #d4a373;
+            width: 100%;
+            max-width: 450px;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            max-height: 80vh;
+        }
+        body.light-mode .cart-content { background: #faf0e6; border-color: #8c5830; }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #4a2814;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            color: #d4a373;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .close-cart { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
+        body.light-mode .close-cart { color: #2c160b; }
+        .cart-items-list {
+            overflow-y: auto;
+            flex: 1;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a0f0a;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #422414;
+            font-size: 0.85rem;
+        }
+        body.light-mode .cart-item-row { background: #fff; border-color: #d5bdaf; color: #2c160b; }
+        .cart-item-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { background: #3d2314; color: #d4a373; border: none; width: 22px; height: 22px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .cart-footer { border-top: 1px solid #4a2814; padding-top: 12px; }
+        .cart-total { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 12px; color: #d4a373; font-size: 1rem; }
+        .btn-send-whatsapp {
+            width: 100%;
+            background: #27ae60;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            letter-spacing: 0.5px;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+        }
+
+        header { 
+            position: relative;
+            text-align: center; 
+            padding: 30px 20px; 
+            background: linear-gradient(rgba(44, 22, 11, 0.92), rgba(26, 15, 10, 0.96)), 
+                        url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800') no-repeat center center;
+            background-size: cover;
+            border-bottom: 2px solid #5c3a21;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+        }
+
+        .coffee-title-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 18px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+        }
+
+        .coffee-fancy-text {
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-size: 2.2rem;
+            color: #2c160b;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .restaurant-name { 
+            font-size: 1.7rem; 
+            color: #ffecd1; 
+            margin-bottom: 5px; 
+            font-weight: bold; 
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.9); 
+        }
+
+        .restaurant-info { 
+            color: #e3d5ca; 
+            font-size: 0.85rem; 
+            margin-bottom: 15px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+        }
+
+        .info-card-header {
+            background: rgba(61, 35, 20, 0.85);
+            border: 1px solid #8c5830;
+            padding: 8px 15px;
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            max-width: 550px;
+            font-size: 0.8rem;
+            color: #f5ebe0;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-box { 
+            width: 90%; 
+            max-width: 400px; 
+            padding: 10px 18px; 
+            border-radius: 20px; 
+            border: 1px solid #8c5830; 
+            background: rgba(44, 22, 11, 0.85); 
+            color: #fff; 
+            outline: none; 
+            font-size: 0.95rem; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .search-box:focus { border-color: #d4a373; }
+
+        nav { display: flex; justify-content: center; gap: 8px; margin-top: 15px; flex-wrap: wrap; padding: 0 10px; }
+        nav button { 
+            padding: 7px 14px; 
+            border: 1px solid #704224; 
+            background: rgba(44, 22, 11, 0.9); 
+            color: #e3d5ca; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            font-size: 0.85rem; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        nav button:hover, nav button.active { background: #d4a373; color: #2c160b; border-color: #d4a373; font-weight: bold; }
+
+        .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+
+        .special-coffee-banner {
+            background: linear-gradient(135deg, #3d2314, #23140a);
+            border: 1px solid #d4a373;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .special-coffee-title { font-weight: bold; color: #d4a373; font-size: 0.95rem; }
+        .special-coffee-desc { font-size: 0.85rem; color: #e3d5ca; }
+        
+        .admin-toggle-btn { background: #3d2314; color: #e3d5ca; border: 1px solid #704224; border-radius: 20px; font-size: 0.85rem; cursor: pointer; display: block; margin: 0 auto 15px; padding: 6px 15px; transition: 0.2s; }
+        .admin-toggle-btn:hover { background: #d4a373; color: #2c160b; }
+
+        .admin-section { display: none; background: #2c160b; padding: 20px; border-radius: 12px; border: 1px solid #5c3a21; margin-bottom: 30px; }
+        .admin-section h3 { color: #d4a373; margin-bottom: 15px; }
+
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 4px; font-size: 0.9rem; color: #d5bdaf; }
+        .form-group input, .form-group select { width: 100%; padding: 8px 12px; background: #1a0f0a; border: 1px solid #5c3a21; color: #fff; border-radius: 6px; }
+        .btn-add { width: 100%; background: #d4a373; color: #2c160b; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
+        .item-card { background: #23140a; border-radius: 12px; overflow: hidden; border: 1px solid #4a2814; display: flex; flex-direction: column; transition: transform 0.2s; position: relative; }
+        .item-card:hover { transform: translateY(-3px); }
+        
+        .offer-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #b05721;
+            color: #fff;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .item-img { width: 100%; height: 160px; object-fit: cover; background: #1a0f0a; }
+        .item-details { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .item-title { font-size: 1.05rem; color: #f5ebe0; font-weight: bold; }
+        .item-desc { font-size: 0.8rem; color: #b0a69f; margin: 5px 0 10px; }
+        .item-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .item-price { color: #d4a373; font-weight: bold; font-size: 1rem; }
+        
+        .btn-add-cart {
+            background: #d4a373;
+            color: #2c160b;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .btn-add-cart:hover { background: #b08958; }
+
+        .btn-del { display: none; background: #a43030; color: #fff; border: none; padding: 6px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; margin-top: 10px; width: 100%; }
+
+        .music-section {
+            margin-top: 40px;
+            background: #23140a;
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 1px solid #4a2814;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .music-info { display: flex; align-items: center; gap: 10px; }
+        .music-icon { font-size: 1.5rem; animation: bounce 1.5s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        .music-text-title { font-weight: bold; color: #d4a373; font-size: 0.95rem; }
+        .music-text-sub { font-size: 0.8rem; color: #b0a69f; }
+        
+        .music-player-box {
+            display: flex;
+            align-items: center;
+            background: #1a0f0a;
+            padding: 8px 12px;
+            border-radius: 30px;
+            border: 1px solid #5c3a21;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+        }
+        .music-player-box audio { 
+            height: 35px; 
+            outline: none; 
+            filter: sepia(20%) saturate(70%) hue-rotate(330deg);
+        }
+
+        .reviews-section {
+            margin-top: 40px;
+            background: #23140a;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #4a2814;
+        }
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .reviews-title { color: #d4a373; font-size: 1.1rem; font-weight: bold; }
+        .add-review-btn {
+            background: #d4a373;
+            color: #2c160b;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+        .review-card {
+            background: #1a0f0a;
+            border: 1px solid #5c3a21;
+            padding: 12px 15px;
+            border-radius: 10px;
+            position: relative;
+        }
+        .review-author { font-weight: bold; color: #f5ebe0; font-size: 0.9rem; }
+        .review-stars { color: #f39c12; font-size: 0.85rem; margin: 4px 0; }
+        .review-text { font-size: 0.8rem; color: #b0a69f; }
+
+        .review-form-box {
+            display: none;
+            background: #1a0f0a;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #8c5830;
+            margin-bottom: 20px;
+        }
+
+        .map-section { margin-top: 30px; border-radius: 12px; overflow: hidden; border: 1px solid #4a2814; }
+        .map-section iframe { width: 100%; height: 250px; border: 0; display: block; }
+
+        footer { text-align: center; padding: 20px; background: #1a0f0a; margin-top: 40px; border-top: 1px solid #3d2314; }
+        .social-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; flex-wrap: wrap; }
+        .social-btn { color: #e3d5ca; text-decoration: none; font-size: 0.9rem; border: 1px solid #5c3a21; padding: 6px 12px; border-radius: 15px; background: #2c160b; }
+    </style>
+</head>
+<body>
+
+    <div id="successBanner">🚀 داواکارییەکەت ئامادەیە، تکایە دوگمەی Send دابگرە لە پەنجەرەی واتسئاپدا!</div>
+
+    <div id="splashScreen">
+        <div class="splash-logo">Coffee House</div>
+        <div class="splash-text">تکایە چاوەڕوان بە...</div>
+    </div>
+
+    <button class="floating-cart-btn" onclick="toggleCartModal()">
+        🛒
+        <span class="cart-counter" id="cartCounter">0</span>
+    </button>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <span>🛒 سەبەتەی داواکارییەکان</span>
+                <button class="close-cart" onclick="toggleCartModal()">✕</button>
+            </div>
+            <div class="cart-items-list" id="cartItemsList">
+                <p style="color:#b0a69f; text-align:center; margin-top:20px;">سەبەتەکەت خاڵییە</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>کۆی گشتی:</span>
+                    <span id="cartTotalPrice">0 دینار</span>
+                </div>
+                <a href="#" id="whatsappSendLink" class="btn-send-whatsapp" onclick="triggerSendWhatsApp(event)">📤 Send (ناردن بۆ واتسئاپ)</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="top-bar">
+        <span id="txtOpenStatus">🟢 کراوەیە تا ١٢:٠٠ـی شەو</span>
+        <div class="top-bar-left">
+            <button class="table-badge-btn" id="tableIndicator" onclick="changeTableNumber()">🪑 مێز: دیاری نەکراوە</button>
+            <button class="table-badge-btn" onclick="alert('پاسپۆردی وایفای (Wi-Fi): CoffeeHouse2026')">📶 وایفای</button>
+            <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeBtn">🌓 دۆخی ڕووناک</button>
+            <div class="lang-switcher">
+                <select id="langSelect" onchange="changeLanguage(this.value)">
+                    <option value="ckb">کوردی (Sorani)</option>
+                    <option value="en">English</option>
+                    <option value="ar">العربية</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="welcome-ticker">
+        <span>☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین قاوەی جیهانی، ئۆفەری ناوازە و کاتی پڕ لە ئارامی چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎</span>
+    </div>
+
+    <header>
+        <div class="coffee-title-box">
+            <div class="coffee-fancy-text">Coffee</div>
+        </div>
+
+        <div class="restaurant-name">قاوەخانە | Coffee House</div>
+        <div class="restaurant-info">
+            <span id="txtSubTitle">☕ مێنیووی تایبەتی قاوەکان</span>
+            <span id="txtLocation">📍 سلێمانی، بەردەرکی سەرای</span>
+        </div>
+
+        <div class="info-card-header">
+            <span>⏰ <b id="txtHoursLabel">کاتی کارکردن:</b> 08:00 بەیانی - 12:00 شەو</span>
+            <span>📞 <b id="txtPhoneLabel">تەلەفۆن:</b> 07517283166</span>
+        </div>
+        
+        <input type="text" class="search-box" id="searchInput" placeholder="گەڕان بۆ جۆرەکان..." onkeyup="filterItems()">
+        
+        <nav>
+            <button class="nav-btn active" onclick="filterCategory('هەمووی', this)" data-cat="هەمووی">هەمووی</button>
+            <button class="nav-btn" onclick="filterCategory('ئۆفەر', this)" data-cat="ئۆفەر">🔥 ئۆفەری تایبەت</button>
+            <button class="nav-btn" onclick="filterCategory('ئێسپڕێسۆ', this)" data-cat="ئێسپڕێسۆ">ئێسپڕێسۆ</button>
+            <button class="nav-btn" onclick="filterCategory('کافێ لەتێ', this)" data-cat="کافێ لەتێ">کافێ لەتێ</button>
+            <button class="nav-btn" onclick="filterCategory('کاپوچینۆ', this)" data-cat="کاپوچینۆ">کاپوچینۆ</button>
+            <button class="nav-btn" onclick="filterCategory('قاوەی سارد', this)" data-cat="قاوەی سارد">قاوەی سارد</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="actions-bar">
+            <button class="action-btn" onclick="callWaiter()">🔔 بانگکردنی گارسۆن</button>
+            <button class="action-btn btn-bill" onclick="requestBill()">🧾 داوای حیساب</button>
+        </div>
+
+        <div class="special-coffee-banner">
+            <div>
+                <div class="special-coffee-title" id="txtDailySpecialTitle">🌟 قاوەی تایبەتی ئەمڕۆ (Guest Coffee)</div>
+                <div class="special-coffee-desc" id="txtDailySpecialDesc">قاوەی ئەسیوبی برژاوی تایبەت - بۆ ئەمڕۆ تاقی بکەرەوە!</div>
+            </div>
+            <span style="font-size: 1.5rem;">☕</span>
+        </div>
+
+        <button class="admin-toggle-btn" id="adminBtn" onclick="toggleAdmin()">🔑 چوونه‌ژووره‌وه‌ی بەڕێوەبەر</button>
+
+        <div class="admin-section" id="adminSection">
+            <h3>⚙️ بەشی بەڕێوەبەر - زیادکردنی بەرهەم یان ئۆفەر</h3>
+            <form id="itemForm">
+                <div class="form-group">
+                    <label>ناوی بەرهەم:</label>
+                    <input type="text" id="dbItemName" required placeholder="نموونە: ئۆفەری تایبەت">
+                </div>
+                <div class="form-group">
+                    <label>بەش (Category):</label>
+                    <select id="dbItemCategory">
+                        <option value="ئۆفەر">🔥 ئۆفەری تایبەت</option>
+                        <option value="ئێسپڕێسۆ">ئێسپڕێسۆ</option>
+                        <option value="کافێ لەتێ">کافێ لەتێ</option>
+                        <option value="کاپوچینۆ">کاپوچینۆ</option>
+                        <option value="قاوەی سارد">قاوەی سارد</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>نرخ:</label>
+                    <input type="text" id="dbItemPrice" required placeholder="نموونە: 3,000 دینار">
+                </div>
+                <div class="form-group">
+                    <label>کورتە پێناسە:</label>
+                    <input type="text" id="dbItemDesc" placeholder="پێکهاتەی بەرهەمەکە...">
+                </div>
+                <div class="form-group">
+                    <label>هەڵبژاردنی وێنە لە کۆمپیوتەرەکەت:</label>
+                    <input type="file" id="dbItemFile" accept="image/*" required style="padding: 6px;">
+                </div>
+                <button type="submit" class="btn-add">زیادکردن بۆ مێنیوو</button>
+            </form>
+
+            <hr style="border-color: #5c3a21; margin: 20px 0;">
+
+            <h3>🎵 گۆڕینی مۆسیقای ماڵپەڕ لە داتابەیس</h3>
+            <div class="form-group">
+                <label>ناوی مۆسیقا (Title):</label>
+                <input type="text" id="dbMusicTitleInput" placeholder="نموونە: مۆسیقای هێمنی ١" value="مۆسیقای هێمنی قاوەخانە">
+            </div>
+            <div class="form-group">
+                <label>فایلی دەنگی (MP3) هەڵبژێرە:</label>
+                <input type="file" id="dbMusicFile" accept="audio/*" style="padding: 6px;">
+            </div>
+            <button type="button" class="btn-add" onclick="uploadMusicToSupabase()">پاشەکەوتکردن لە داتابەیس</button>
+        </div>
+
+        <div class="menu-grid" id="menuGrid">
+            <p style="grid-column: 1/-1; text-align:center; color:#b0a69f;">سەرقاڵی هێنانی داتاکان لە داتابەیس...</p>
+        </div>
+
+        <div class="music-section">
+            <div class="music-info">
+                <div class="music-icon">🎵</div>
+                <div>
+                    <div class="music-text-title" id="txtMusicTitle">مۆسیقای هێمنی قاوەخانە</div>
+                    <div class="music-text-sub" id="txtMusicSub">بۆ ئارامی لە کاتی خواردنەوەی قاوەکەتدا</div>
+                </div>
+            </div>
+            <div class="music-player-box">
+                <audio controls id="bgAudioPlayer">
+                    <source src="" type="audio/mp3" id="bgAudioSource">
+                    پەڕەی گەڕۆکەکەت پشتگیری ئەم فایلی دەنگییە ناکات.
+                </audio>
+            </div>
+        </div>
+
+        <div class="reviews-section">
+            <div class="reviews-header">
+                <div class="reviews-title" id="txtReviewsTitle">💬 ڕای کڕیاران و سەردانکەران</div>
+                <button class="add-review-btn" onclick="toggleReviewForm()" id="txtAddReviewBtn">⭐ ڕای خۆت بنووسە</button>
+            </div>
+
+            <div class="review-form-box" id="reviewFormBox">
+                <h4 style="color: #d4a373; margin-bottom: 10px; font-size: 0.95rem;">بۆچوونی خۆت لەسەر قاوەخانەکەمان بنووسە</h4>
+                <form id="submitReviewForm" onsubmit="submitReview(event)">
+                    <div class="form-group">
+                        <label>ناوی بەڕێزت:</label>
+                        <input type="text" id="revName" required placeholder="ناوی خۆت...">
+                    </div>
+                    <div class="form-group">
+                        <label>هەڵسەنگاندن (ئەستێرە):</label>
+                        <select id="revRating">
+                            <option value="5">⭐⭐⭐⭐⭐ (ناوازەیە)</option>
+                            <option value="4">⭐⭐⭐⭐ (باشە)</option>
+                            <option value="3">⭐⭐⭐ (تێکڕایی)</option>
+                            <option value="2">⭐⭐ (خراپ نییە)</option>
+                            <option value="1">⭐ (پێویستی بە چاکسازییە)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>تێبینی یان بۆچوونت:</label>
+                        <input type="text" id="revComment" required placeholder="خزمەتگوزاری و قاوەکە چۆن بوو؟">
+                    </div>
+                    <button type="submit" class="btn-add">ناردنی ڕای خۆم</button>
+                </form>
+            </div>
+
+            <div class="reviews-grid" id="reviewsGrid">
+                <p style="color: #b0a69f; text-align: center; grid-column: 1/-1;">سەرقاڵی هێنانی ڕای کڕیاران...</p>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <iframe src="https://maps.google.com/maps?q=Sulaymaniyah&t=&z=13&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://wa.me/9647517283166" target="_blank" class="social-btn" id="txtWhatsApp">💬 چات لە واتسئاپ</a>
+            <a href="https://instagram.com" target="_blank" class="social-btn">📸 ئینستاگرام</a>
+            <a href="https://maps.google.com" target="_blank" class="social-btn" id="txtMap">📍 نەخشەی ناونیشان</a>
+        </div>
+        <p style="color: #8c7a6b; font-size: 0.8rem;" id="txtFooter">مێنیووی دیجیتاڵی قاوەخانە - هەموو مافێک پارێزراوە</p>
+    </footer>
+
+    <script>
+        const whatsappNumber = "9647517283166";
+        let menuItems = [];
+        let reviewsList = [];
+        let currentCat = 'هەمووی';
+        let isAdmin = false;
+        let cart = [];
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splashScreen');
+                if(splash) {
+                    splash.style.opacity = '0';
+                    setTimeout(() => splash.style.display = 'none', 500);
+                }
+            }, 800);
+            
+            // وەرگرتن و پاشەکەوتکردنی ژمارەی مێز بۆ ئەوەی بە گەڕانەوە نەفەوتێت
+            const urlParams = new URLSearchParams(window.location.search);
+            const tableParam = urlParams.get('table');
+            if(tableParam) {
+                localStorage.setItem('coffee_table_num', tableParam);
+                document.getElementById('tableIndicator').innerText = `🪑 مێز: ${tableParam}`;
+            } else {
+                const savedTable = localStorage.getItem('coffee_table_num');
+                if(savedTable) {
+                    document.getElementById('tableIndicator').innerText = `🪑 مێز: ${savedTable}`;
+                }
+            }
+
+            // سەبەتە بەتاڵ دەبێتەوە کاتێک پەڕەکە باردەبێتەوە (دوای ناردنی داواکاری یان سەرەتای کردنەوە)
+            cart = [];
+            updateCartUI();
+        });
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function addToCart(id) {
+            const item = menuItems.find(i => i.id == id);
+            if(!item) return;
+
+            const existing = cart.find(i => i.id == id);
+            if(existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        function updateCartQty(id, change) {
+            const item = cart.find(i => i.id == id);
+            if(!item) return;
+            item.qty += change;
+            if(item.qty <= 0) {
+                cart = cart.filter(i => i.id != id);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const counter = document.getElementById('cartCounter');
+            const list = document.getElementById('cartItemsList');
+            const totalPriceEl = document.getElementById('cartTotalPrice');
+
+            const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
+            counter.innerText = totalCount;
+
+            if(cart.length === 0) {
+                list.innerHTML = '<p style="color:#b0a69f; text-align:center; margin-top:20px;">سەبەتەکەت خاڵییە</p>';
+                totalPriceEl.innerText = '0 دینار';
+                return;
+            }
+
+            list.innerHTML = '';
+            let totalSum = 0;
+
+            cart.forEach(i => {
+                const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
+                const itemTotal = numericPrice * i.qty;
+                totalSum += itemTotal;
+
+                const row = document.createElement('div');
+                row.className = 'cart-item-row';
+                row.innerHTML = `
+                    <div>
+                        <div style="font-weight:bold;">${i.name}</div>
+                        <div style="color:#d4a373; font-size:0.75rem;">${i.price}</div>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button class="qty-btn" onclick="updateCartQty('${i.id}', -1)">-</button>
+                        <span>${i.qty}</span>
+                        <button class="qty-btn" onclick="updateCartQty('${i.id}', 1)">+</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+
+            totalPriceEl.innerText = totalSum.toLocaleString() + ' دینار';
+
+            // دروستکردنی نامەی واتسئاپ
+            const currentTable = localStorage.getItem('coffee_table_num') || 'نادیار';
+            let itemsSummary = [];
+            cart.forEach(i => {
+                const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
+                const itemTotal = numericPrice * i.qty;
+                itemsSummary.push(`${i.qty} دەنکە ${i.name} (${itemTotal.toLocaleString()} دینار)`);
+            });
+
+            let whatsappMessage = `🚨 داواکاری نوێ لە مێز: (${currentTable})\n\n`;
+            whatsappMessage += `📋 لیست:\n` + itemsSummary.join('\n') + `\n\n`;
+            whatsappMessage += `💰 کۆی گشتی: ${totalSum.toLocaleString()} دینار`;
+
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            document.getElementById('whatsappSendLink').href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+        }
+
+        function showSuccessBanner() {
+            const banner = document.getElementById('successBanner');
+            banner.style.display = 'block';
+            setTimeout(() => {
+                banner.style.display = 'none';
+            }, 5000); 
+        }
+
+        function triggerSendWhatsApp(e) {
+            if(cart.length === 0) {
+                e.preventDefault();
+                alert("سەبەتەکەت خاڵییە!");
+                return;
+            }
+
+            // کاتێک نامە دەنێردرێت، سەبەتە خاڵی دەبێتەوە و پەیامی سەرکەوتوو نیشان دەدرێت
+            setTimeout(() => {
+                cart = [];
+                updateCartUI();
+                toggleCartModal();
+                showSuccessBanner();
+            }, 300);
+        }
+
+        async function uploadMusicToSupabase() {
+            const fileInput = document.getElementById('dbMusicFile');
+            const titleInput = document.getElementById('dbMusicTitleInput').value || 'مۆسیقای هێمنی قاوەخانە';
+
+            if(fileInput.files.length === 0) {
+                alert("تکایە سەرەتا فایلی دەنگی (MP3) هەڵبژێرە!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const fileExt = file.name.split('.').pop();
+            const fileName = `music_${Date.now()}.${fileExt}`;
+
+            if(!window.supabase) {
+                alert("پەیوەندی بە Supabaseـەوە نییە!");
+                return;
+            }
+
+            const { error: uploadError } = await window.supabase.storage
+                .from('audio')
+                .upload(fileName, file);
+
+            if (uploadError) {
+                alert('هەڵە لە بەرزکردنەوەی فایلی دەنگی: ' + uploadError.message);
+                return;
+            }
+
+            const { data: publicUrlData } = window.supabase.storage
+                .from('audio')
+                .getPublicUrl(fileName);
+
+            const musicUrl = publicUrlData.publicUrl;
+
+            await window.supabase.from('site_settings').delete().neq('id', 0);
+
+            const { error: dbError } = await window.supabase
+                .from('site_settings')
+                .insert([{ title: titleInput, music_url: musicUrl }]);
+
+            if (dbError) {
+                alert('هەڵە لە پاشەکەوتکردنی زانیاری لە خشتە: ' + dbError.message);
+            } else {
+                alert("مۆسیقاکە بە سەرکەوتوویی لە داتابەیس نوێکرایەوە! 🎵");
+                fetchMusicFromSupabase();
+            }
+        }
+
+        async function fetchMusicFromSupabase() {
+            if(!window.supabase) return;
+            const { data, error } = await window.supabase
+                .from('site_settings')
+                .select('*')
+                .limit(1);
+
+            if(!error && data && data.length > 0) {
+                const musicData = data[0];
+                if(musicData.music_url) {
+                    document.getElementById('txtMusicTitle').innerText = musicData.title || 'مۆسیقای هێمنی قاوەخانە';
+                    const audioPlayer = document.getElementById('bgAudioPlayer');
+                    const audioSource = document.getElementById('bgAudioSource');
+                    audioSource.src = musicData.music_url;
+                    audioPlayer.load();
+                }
+            }
+        }
+
+        function toggleReviewForm() {
+            const box = document.getElementById('reviewFormBox');
+            box.style.display = box.style.display === 'block' ? 'none' : 'block';
+        }
+
+        async function fetchReviews() {
+            if(!window.supabase) return;
+            const { data, error } = await window.supabase
+                .from('reviews')
+                .select('*')
+                .order('id', { ascending: false });
+
+            if(error) {
+                console.error('هەڵە لە هێنانی ڕای کڕیاران:', error);
+                return;
+            }
+
+            reviewsList = data || [];
+            renderReviews(reviewsList);
+        }
+
+        function renderReviews(reviews) {
+            const grid = document.getElementById('reviewsGrid');
+            grid.innerHTML = '';
+
+            if(reviews.length === 0) {
+                grid.innerHTML = '<p style="color: #b0a69f; text-align: center; grid-column: 1/-1;">تا ئێستا هیچ ڕایەک نەنوسراوە. یەکەم کەس بە بۆچوونی خۆت بنووسە!</p>';
+                return;
+            }
+
+            reviews.forEach(r => {
+                const stars = '⭐'.repeat(r.rating || 5);
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <div class="review-author">${r.customer_name}</div>
+                            <div class="review-stars">${stars}</div>
+                        </div>
+                        <button class="btn-del" style="display: ${isAdmin ? 'block' : 'none'}; width: auto; padding: 4px 10px; font-size: 0.8rem; margin: 0; background: #a43030; color: #fff; border-radius: 6px; border: none; cursor: pointer;" onclick="deleteReview('${r.id}')">سڕینەوە</button>
+                    </div>
+                    <div class="review-text" style="margin-top: 8px;">${r.comment}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        async function deleteReview(id) {
+            if(confirm("دڵنیایت لە سڕینەوەی ئەم کۆمێنتە؟")) {
+                if(!window.supabase) {
+                    alert("پەیوەندی بە داتابەیسەوە نییە!");
+                    return;
+                }
+
+                const { error } = await window.supabase
+                    .from('reviews')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) {
+                    alert('هەڵە لە سڕینەوەی کۆمێنت: ' + error.message);
+                } else {
+                    fetchReviews();
+                }
+            }
+        }
+
+        async function submitReview(e) {
+            e.preventDefault();
+            const customer_name = document.getElementById('revName').value;
+            const rating = parseInt(document.getElementById('revRating').value);
+            const comment = document.getElementById('revComment').value;
+
+            if(!window.supabase) {
+                alert("پەیوەندی بە داتابەیسەوە نییە!");
+                return;
+            }
+
+            const { error } = await window.supabase
+                .from('reviews')
+                .insert([{ customer_name, rating, comment }]);
+
+            if(error) {
+                alert('هەڵە لە ناردنی ڕای کڕیار: ' + error.message);
+            } else {
+                alert('سوپاس بۆ بۆچوونەکەت! ڕایت بە سەرکەوتوویی بڵاوکرایەوە ✨');
+                document.getElementById('submitReviewForm').reset();
+                document.getElementById('reviewFormBox').style.display = 'none';
+                fetchReviews();
+            }
+        }
+
+        function changeTableNumber() {
+            const num = prompt("ژمارەی مێزەکەت بنووسە (نموونە: 4):");
+            if(num) {
+                localStorage.setItem('coffee_table_num', num);
+                document.getElementById('tableIndicator').innerText = `🪑 مێز: ${num}`;
+            }
+        }
+
+        function callWaiter() {
+            const currentTable = localStorage.getItem('coffee_table_num') || 'نادیار';
+            const message = encodeURIComponent(`سڵاو، تکایە گارسۆن بنێرن بۆ مێز ژمارە (${currentTable}).`);
+            window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+        }
+
+        function requestBill() {
+            const currentTable = localStorage.getItem('coffee_table_num') || 'نادیار';
+            const message = encodeURIComponent(`سڵاو، تکایە حیسابەکەمان بۆ بنێرن بۆ مێز ژمارە (${currentTable}).`);
+            window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+        }
+
+        async function initApp() {
+            await fetchMenuFromSupabase();
+            await fetchMusicFromSupabase();
+            await fetchReviews();
+            
+            if(window.supabase) {
+                window.supabase
+                    .channel('public:menu_items')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'menu_items' }, () => {
+                        fetchMenuFromSupabase();
+                    })
+                    .subscribe();
+
+                window.supabase
+                    .channel('public:site_settings')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'site_settings' }, () => {
+                        fetchMusicFromSupabase();
+                    })
+                    .subscribe();
+
+                window.supabase
+                    .channel('public:reviews')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'reviews' }, () => {
+                        fetchReviews();
+                    })
+                    .subscribe();
+            }
+        }
+
+        let currentLang = 'ckb';
+        const translations = {
+            ckb: {
+                title: "مێنیووی قاوەخانە - Coffee Menu",
+                openStatus: "🟢 کراوەیە تا ١٢:٠٠ـی شەو",
+                subTitle: "☕ مێنیووی تایبەتی قاوەکان",
+                location: "📍 سلێمانی، بەردەرکی سەرای",
+                hoursLabel: "کاتی کارکردن:",
+                phoneLabel: "تەلەفۆن:",
+                searchPlaceholder: "گەڕان بۆ جۆرەکان...",
+                adminBtn: "🔑 چوونه‌ژووره‌وه‌ی بەڕێوەبەر",
+                dailyTitle: "🌟 قاوەی تایبەتی ئەمڕۆ (Guest Coffee)",
+                dailyDesc: "قاوەی ئەسیوبی برژاوی تایبەت - بۆ ئەمڕۆ تاقی بکەرەوە!",
+                musicSub: "بۆ ئارامی لە کاتی خواردنەوەی قاوەکەتدا",
+                reviewsTitle: "💬 ڕای کڕیاران و سەردانکەران",
+                addReviewBtn: "⭐ ڕای خۆت بنووسە",
+                whatsapp: "💬 چات لە واتسئاپ",
+                map: "📍 نەخشەی ناونیشان",
+                footer: "مێنیووی دیجیتاڵی قاوەخانە - هەموو مافێک پارێزراوە"
+            },
+            en: {
+                title: "Coffee House Menu",
+                openStatus: "🟢 Open until 12:00 AM",
+                subTitle: "☕ Special Coffee Menu",
+                location: "📍 Sulaymaniyah, Saray",
+                hoursLabel: "Working Hours:",
+                phoneLabel: "Phone:",
+                searchPlaceholder: "Search items...",
+                adminBtn: "🔑 Admin Login",
+                dailyTitle: "🌟 Today's Special Roast (Guest Coffee)",
+                dailyDesc: "Special Ethiopian roasted coffee - try it today!",
+                musicSub: "Relaxing tunes for your coffee time",
+                reviewsTitle: "💬 Customer Reviews & Feedback",
+                addReviewBtn: "⭐ Write a Review",
+                whatsapp: "💬 WhatsApp Chat",
+                map: "📍 Location Map",
+                footer: "Coffee House Digital Menu - All Rights Reserved"
+            },
+            ar: {
+                title: "قائمة مقهى - Coffee Menu",
+                openStatus: "🟢 مفتوح حتى 12:00 صباحاً",
+                subTitle: "☕ قائمة القهوة الخاصة",
+                location: "📍 السليمانية، السراي",
+                hoursLabel: "ساعات العمل:",
+                phoneLabel: "الهاتف:",
+                searchPlaceholder: "البحث عن الأصناف...",
+                adminBtn: "🔑 دخول المشرف",
+                dailyTitle: "🌟 قهوة اليوم الخاصة (Guest Coffee)",
+                dailyDesc: "قهوة إثيوبية محمصة خاصة - جربها اليوم!",
+                musicSub: "ألحان هادئة أثناء احتساء قهوتك",
+                reviewsTitle: "💬 آراء الزبائن والزوار",
+                addReviewBtn: "⭐ أضف رأيك",
+                whatsapp: "💬 چات واتساب",
+                map: "📍 خريطة الموقع",
+                footer: "القائمة الرقمية للمقهى - جميع الحقوق محفوظة"
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            document.getElementById('htmlRoot').setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
+            document.getElementById('pageTitle').innerText = t.title;
+            document.getElementById('txtOpenStatus').innerText = t.openStatus;
+            document.getElementById('txtSubTitle').innerText = t.subTitle;
+            document.getElementById('txtLocation').innerText = t.location;
+            document.getElementById('txtHoursLabel').innerText = t.hoursLabel;
+            document.getElementById('txtPhoneLabel').innerText = t.phoneLabel;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            document.getElementById('adminBtn').innerText = isAdmin ? (lang === 'en' ? '🔓 Logout Admin' : '🔓 دەربازبوون لە بەشی بەڕێوەبەر') : t.adminBtn;
+            document.getElementById('txtDailySpecialTitle').innerText = t.dailyTitle;
+            document.getElementById('txtDailySpecialDesc').innerText = t.dailyDesc;
+            document.getElementById('txtMusicSub').innerText = t.musicSub;
+            document.getElementById('txtReviewsTitle').innerText = t.reviewsTitle;
+            document.getElementById('txtAddReviewBtn').innerText = t.addReviewBtn;
+            document.getElementById('txtWhatsApp').innerText = t.whatsapp;
+            document.getElementById('txtMap').innerText = t.map;
+            document.getElementById('txtFooter').innerText = t.footer;
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            document.getElementById('themeBtn').innerText = isLight ? "🌙 دۆخی تاریک" : "🌓 دۆخی ڕووناک";
+        }
+
+        function toggleAdmin() {
+            if (!isAdmin) {
+                const pass = prompt("پاسپۆردی بەڕێوەبەر بنووسە:");
+                if (pass === "1234") {
+                    isAdmin = true;
+                    document.getElementById('adminSection').style.display = 'block';
+                    document.getElementById('adminBtn').innerText = currentLang === 'en' ? '🔓 Logout Admin' : '🔓 دەربازبوون لە بەشی بەڕێوەبەر';
+                    renderMenu();
+                    renderReviews(reviewsList);
+                } else if (pass !== null) {
+                    alert("پاسپۆرد هەڵەیە!");
+                }
+            } else {
+                isAdmin = false;
+                document.getElementById('adminSection').style.display = 'none';
+                document.getElementById('adminBtn').innerText = translations[currentLang].adminBtn;
+                renderMenu();
+                renderReviews(reviewsList);
+            }
+        }
+
+        const form = document.getElementById('itemForm');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('dbItemName').value;
+            const category = document.getElementById('dbItemCategory').value;
+            const price = document.getElementById('dbItemPrice').value;
+            const desc = document.getElementById('dbItemDesc').value;
+            const fileInput = document.getElementById('dbItemFile');
+            const isoffer = (category === 'ئۆفەر');
+
+            if(!window.supabase) {
+                alert("کێشە لە پەیوەندی بە داتابەیسەوە هەیە!");
+                return;
+            }
+
+            if(fileInput.files.length === 0) {
+                alert("تکایە وێنەیەک هەڵبژێرە!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = async function(event) {
+                const base64Img = event.target.result;
+
+                const { error } = await window.supabase
+                    .from('menu_items')
+                    .insert([{ name, category, price, desc, img: base64Img, isoffer }]);
+
+                if (error) {
+                    alert('هەڵە لە زیادکردنی کاڵا: ' + error.message);
+                } else {
+                    form.reset();
+                    alert("بەرهەمەکە بە سەرکەوتوویی زیادکرا!");
+                    fetchMenuFromSupabase();
+                }
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        async function deleteItem(id) {
+            if(confirm("دڵنیایت لە سڕینەوەی ئەم بەرهەمە؟")) {
+                const { error } = await window.supabase
+                    .from('menu_items')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) {
+                    alert('هەڵە لە سڕینەوەی کاڵا: ' + error.message);
+                } else {
+                    fetchMenuFromSupabase();
+                }
+            }
+        }
+
+        async function fetchMenuFromSupabase() {
+            if(!window.supabase) return;
+            const { data, error } = await window.supabase
+                .from('menu_items')
+                .select('*');
+
+            if (error) {
+                console.error('هەڵە لە هێنانی مێنیوو:', error);
+                return;
+            }
+
+            menuItems = data || [];
+            renderMenu();
+        }
+
+        function filterCategory(cat, btn) {
+            currentCat = cat;
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderMenu();
+        }
+
+        function filterItems() { renderMenu(); }
+
+        function renderMenu() {
+            const grid = document.getElementById('menuGrid');
+            grid.innerHTML = '';
+            const query = document.getElementById('searchInput').value.toLowerCase();
+
+            let list = currentCat === 'هەمووی' ? menuItems : menuItems.filter(i => i.category === currentCat);
+            if(query) list = list.filter(i => i.name.toLowerCase().includes(query) || (i.desc && i.desc.toLowerCase().includes(query)));
+
+            if(list.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#b0a69f; padding: 20px;">هیچ بەرهەمێک نەدۆزرایەوە.</p>';
+                return;
+            }
+
+            list.forEach(i => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    ${i.isoffer ? '<span class="offer-badge">ئۆفەری تایبەت</span>' : ''}
+                    <img src="${i.img || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400'}" class="item-img" alt="${i.name}">
+                    <div class="item-details">
+                        <div>
+                            <div class="item-title">${i.name}</div>
+                            <div class="item-desc">${i.desc || ''}</div>
+                        </div>
+                        <div class="item-bottom">
+                            <span class="item-price">${i.price}</span>
+                            <button class="btn-add-cart" onclick="addToCart('${i.id}')">➕ زیادکردن</button>
+                        </div>
+                        <button class="btn-del" style="display: ${isAdmin ? 'block' : 'none'}" onclick="deleteItem('${i.id}')">🗑️ سڕینەوە</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
