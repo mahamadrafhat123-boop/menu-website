@@ -28,7 +28,6 @@
     <style>
         * { box-sizing: border-box; font-family: 'Vazirmatn', sans-serif; }
         
-        /* BEIGE CLASSIC BACKGROUND */
         body { 
             background: linear-gradient(135deg, #f7f1e5 0%, #e8d8c8 50%, #d5c0aa 100%);
             background-attachment: fixed;
@@ -165,6 +164,7 @@
             flex-direction: column;
             transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
+            cursor: pointer;
         }
         .item-card:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(107, 62, 35, 0.15); }
 
@@ -206,7 +206,6 @@
             padding: 0 4px;
         }
 
-        /* CENTER FEATURED COFFEE BANNER WITH INTEGRATED WHITE BADGE */
         .center-coffee-banner {
             position: relative;
             border-radius: 20px;
@@ -350,6 +349,14 @@
         </div>
     </div>
 
+    <!-- Product Details Modal -->
+    <div class="modal-bg" id="productDetailModal">
+        <div class="glass-card w-full max-w-md rounded-2xl p-6 flex flex-col shadow-2xl relative">
+            <button class="absolute top-4 left-4 text-[#522e1b] hover:text-[#8c5830] text-xl cursor-pointer z-10" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modalProductContent" class="space-y-4"></div>
+        </div>
+    </div>
+
     <!-- Cart Modal -->
     <div class="modal-bg" id="cartModal">
         <div class="glass-card w-full max-w-md rounded-2xl p-5 flex flex-col max-h-[85vh] shadow-2xl">
@@ -365,11 +372,8 @@
                     <span id="txtGrandTotalLabel">کۆی گشتی:</span>
                     <span id="cartTotalPrice">0 دینار</span>
                 </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="printCartInvoice()" class="bg-[#522e1b] hover:bg-[#3b2012] text-white py-3 rounded-xl font-bold text-center block shadow transition text-xs cursor-pointer" id="txtBtnPrint">
-                        <i class="fa-solid fa-print ml-1"></i> چاپکردنی وەسڵ
-                    </button>
-                    <a href="#" id="whatsappSendLink" class="bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl font-bold text-center block shadow transition text-xs flex items-center justify-center" onclick="triggerSendWhatsApp(event)">
+                <div>
+                    <a href="#" id="whatsappSendLink" class="bg-emerald-700 hover:bg-emerald-800 text-white py-3 rounded-xl font-bold text-center block shadow transition text-xs flex items-center justify-center w-full" onclick="triggerSendWhatsApp(event)">
                         <i class="fa-brands fa-whatsapp ml-1"></i> <span id="txtBtnWhatsapp">ناردن بۆ واتسئاپ</span>
                     </a>
                 </div>
@@ -387,7 +391,7 @@
 
             <!-- Form to Add New Item -->
             <form id="itemForm" class="space-y-3 mb-6">
-                <div class="font-bold text-xs text-[#522e1b] mb-1 flex items-center gap-1"><i class="fa-solid fa-plus-circle"></i> زیادکردنی بەرهەمی نوێ:</div>
+                <div class="font-bold text-xs text-[#522e1b] mb-1 flex items-center gap-1"><i class="fa-solid fa-plus-circle"></i> زیادکردنی بەرهەمی نوێ (وێنە بە شێوەی ئۆتۆماتیکی دەبێتە 16:9):</div>
                 <div>
                     <label class="block mb-1 text-xs font-bold text-[#522e1b]">ناوی بەرهەم:</label>
                     <input type="text" id="dbItemName" required placeholder="نموونە: کاپوچینۆی ئیتالی" class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
@@ -395,7 +399,6 @@
                 <div>
                     <label class="block mb-1 text-xs font-bold text-[#522e1b]">بەش (Category):</label>
                     <select id="dbItemCategory" class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
-                        <option value="قاوە">☕ قاوە</option>
                         <option value="ئێسپڕێسۆ">☕ ئێسپڕێسۆ</option>
                         <option value="کافێ لەتێ">☕ کافێ لەتێ</option>
                         <option value="کاپوچینۆ">☕ کاپوچینۆ</option>
@@ -409,11 +412,11 @@
                     <input type="text" id="dbItemPrice" required placeholder="نموونە: 3,500 دینار" class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
                 </div>
                 <div>
-                    <label class="block mb-1 text-xs font-bold text-[#522e1b]">کورتە پێناسە:</label>
-                    <input type="text" id="dbItemDesc" placeholder="پێکهاتەی بەرهەمەکە..." class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
+                    <label class="block mb-1 text-xs font-bold text-[#522e1b]">کورتە پێناسە و پێکهاتە:</label>
+                    <input type="text" id="dbItemDesc" placeholder="پێکهاتە و وردەکاری بەرهەمەکە..." class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
                 </div>
                 <div>
-                    <label class="block mb-1 text-xs font-bold text-[#522e1b]">هەڵبژاردنی وێنە لە کۆمپیوتەرەکەت:</label>
+                    <label class="block mb-1 text-xs font-bold text-[#522e1b]">هەڵبژاردنی وێنە (هەر قەبارەیەک بێت دەگۆڕدرێت بۆ 16:9):</label>
                     <input type="file" id="dbItemFile" accept="image/*" required class="w-full p-2 bg-white/90 border border-[#8c5830]/30 text-xs text-[#522e1b] rounded-xl cursor-pointer">
                 </div>
                 <button type="submit" class="w-full bg-[#6b3e23] hover:bg-[#522e1b] text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition shadow">زیادکردن بۆ مێنیوو</button>
@@ -421,7 +424,6 @@
 
             <hr class="border-[#8c5830]/20 my-4">
 
-            <!-- CLEAR VISIBLE DELETE SECTION AT THE BOTTOM -->
             <div class="bg-white/80 p-4 rounded-xl border border-[#8c5830]/20">
                 <h4 class="font-extrabold text-sm text-[#522e1b] mb-3 flex items-center gap-2 border-b border-[#8c5830]/20 pb-2">
                     <i class="fa-solid fa-trash-can text-red-600"></i> سڕینەوەی بەرهەمەکانی مێنیوو
@@ -464,6 +466,9 @@
             <button class="bg-[#6b3e23] text-white px-3 py-1.5 rounded-lg cursor-pointer font-bold hover:bg-[#522e1b] transition flex items-center gap-1" onclick="openTableModal()">
                 <i class="fa-solid fa-plus ml-1"></i> <span id="txtAddTable">زیادکردنی مێز</span>
             </button>
+            <button class="bg-[#522e1b] text-white px-3 py-1.5 rounded-lg cursor-pointer font-bold hover:bg-[#3b2012] transition flex items-center gap-1" onclick="printCartInvoice()" id="txtBtnPrintTop">
+                <i class="fa-solid fa-print ml-1"></i> چاپکردنی وەسڵ
+            </button>
             <button class="bg-[#6b3e23] text-white px-3 py-1.5 rounded-lg cursor-pointer font-bold hover:bg-[#522e1b] transition" id="adminBtn" onclick="openAdminModal()">
                 <i class="fa-solid fa-key ml-1"></i> <span id="txtAdminBtn">بەڕێوەبەر</span>
             </button>
@@ -471,7 +476,7 @@
     </div>
 
     <div class="welcome-ticker shadow-inner">
-        <span id="txtMarquee">☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین قاوە، ئێسپڕێسۆ، کافێ لەتێ، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎</span>
+        <span id="txtMarquee">☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین ئێسپڕێسۆ، کافێ لەتێ، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎</span>
     </div>
 
     <!-- Header Section -->
@@ -514,7 +519,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 items-start">
             
-            <!-- Left Side Panel with Visual Image Category Cards -->
+            <!-- Left Side Panel -->
             <div class="glass-card p-4 rounded-2xl md:col-span-1 border border-[#8c5830]/30 shadow-xl sticky top-4">
                 <div class="font-extrabold text-[#522e1b] text-sm mb-3 pb-2 border-b border-[#8c5830]/20 flex items-center gap-2" id="txtCategoriesPanelTitle">
                     <i class="fa-solid fa-layer-group text-[#8c5830]"></i> بەشەکانی مێنیوو
@@ -523,10 +528,6 @@
                     <div class="cat-card active" onclick="filterCategory('هەمووی', this)">
                         <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400" alt="All">
                         <span id="catAll">هەمووی</span>
-                    </div>
-                    <div class="cat-card" onclick="filterCategory('قاوە', this)">
-                        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400" alt="Coffee">
-                        <span id="catCoffee">☕ قاوە</span>
                     </div>
                     <div class="cat-card" onclick="filterCategory('ئێسپڕێسۆ', this)">
                         <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400" alt="Espresso">
@@ -558,7 +559,6 @@
             <!-- Main Center Content Area -->
             <div class="md:col-span-3 space-y-6">
 
-                <!-- INTEGRATED COFFEE HOUSE CENTER BANNER WITH WHITE GLASS BADGE -->
                 <div class="center-coffee-banner">
                     <div class="white-integrated-badge">
                         <div class="text-[#8c5830] text-2xl font-bold"><i class="fa-solid fa-mug-hot"></i></div>
@@ -568,11 +568,11 @@
                         </div>
                     </div>
                     <div class="hidden sm:block text-white text-right max-w-xs">
-                        <p class="text-xs font-bold leading-relaxed drop-shadow">باشترین تامی قاوە، لەتێ، ئێسپڕێسۆ و شیرینی بەرزکوالێتی لە که‌شێکی ئارامدا</p>
+                        <p class="text-xs font-bold leading-relaxed drop-shadow">باشترین تامی ئێسپڕێسۆ، لەتێ، شیرینی و ساردەمەنی بەرزکوالێتی لە که‌شێکی ئارامدا</p>
                     </div>
                 </div>
 
-                <!-- Products Menu Grid (2-column layout side-by-side) -->
+                <!-- Products Menu Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="menuGrid">
                     <p class="col-span-full text-center text-[#8c7a6b] text-xs py-8">سەرقاڵی هێنانی بەرهەمەکان...</p>
                 </div>
@@ -600,13 +600,13 @@
                 cartTitle: "سەبەتەی داواکارییەکان",
                 emptyCart: "سەبەتەکەت خاڵییە",
                 grandTotal: "کۆی گشتی:",
-                btnPrint: "چاپکردنی وەسڵ",
+                btnPrintTop: "چاپکردنی وەسڵ",
                 btnWhatsapp: "ناردن بۆ واتسئاپ",
                 tableLabel: "مێز:",
                 notSet: "دیاری نەکراوە",
                 addTable: "زیادکردنی مێز",
                 adminBtn: "بەڕێوەبەر",
-                marquee: "☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین قاوە، ئێسپڕێسۆ، کافێ لەتێ، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎",
+                marquee: "☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین ئێسپڕێسۆ، کافێ لەتێ، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎",
                 mainHeading: "قاوەخانە | Coffee House",
                 subTitle: "مێنیووی دیجیتاڵی بەرهەمەکان",
                 location: "سلێمانی، بەردەرکی سەرای",
@@ -616,7 +616,6 @@
                 searchPlaceholder: "گەڕان بۆ جۆرەکان...",
                 categoriesPanelTitle: "بەشەکانی مێنیوو",
                 catAll: "هەمووی",
-                catCoffee: "☕ قاوە",
                 catEspresso: "☕ ئێسپڕێسۆ",
                 catLatte: "☕ کافێ لەتێ",
                 catCappuccino: "☕ کاپوچینۆ",
@@ -629,7 +628,9 @@
                 currency: "دینار",
                 tableModalTitle: "بەڕێوەبردنی مێزەکان",
                 btnAddTable: "زیادکردن",
-                existingTablesLabel: "مێزە بەردەستەکان:"
+                existingTablesLabel: "مێزە بەردەستەکان:",
+                ingredientsLabel: "پێکهاتە و وردەکاری بەرهەم:",
+                priceLabel: "نرخ:"
             },
             en: {
                 title: "Coffee House Digital Menu",
@@ -637,7 +638,7 @@
                 cartTitle: "Your Orders Cart",
                 emptyCart: "Your cart is empty",
                 grandTotal: "Grand Total:",
-                btnPrint: "Print Invoice",
+                btnPrintTop: "Print Invoice",
                 btnWhatsapp: "Send to WhatsApp",
                 tableLabel: "Table:",
                 notSet: "Not Set",
@@ -653,7 +654,6 @@
                 searchPlaceholder: "Search items...",
                 categoriesPanelTitle: "Menu Categories",
                 catAll: "All",
-                catCoffee: "☕ Coffee",
                 catEspresso: "☕ Espresso",
                 catLatte: "☕ Caffè Latte",
                 catCappuccino: "☕ Cappuccino",
@@ -666,7 +666,9 @@
                 currency: "IQD",
                 tableModalTitle: "Table Management",
                 btnAddTable: "Add",
-                existingTablesLabel: "Available Tables:"
+                existingTablesLabel: "Available Tables:",
+                ingredientsLabel: "Ingredients & Details:",
+                priceLabel: "Price:"
             },
             ar: {
                 title: "القائمة الرقمية للمقهى - Coffee House",
@@ -674,7 +676,7 @@
                 cartTitle: "سلة الطلبات",
                 emptyCart: "سلتك فارغة حالياً",
                 grandTotal: "المجموع الكلي:",
-                btnPrint: "طباعة الفاتورة",
+                btnPrintTop: "طباعة الفاتورة",
                 btnWhatsapp: "إرسال إلى واتساب",
                 tableLabel: "الطاولة:",
                 notSet: "غير محدد",
@@ -690,7 +692,6 @@
                 searchPlaceholder: "البحث عن المنتجات...",
                 categoriesPanelTitle: "أقسام القائمة",
                 catAll: "الكل",
-                catCoffee: "☕ القهوة",
                 catEspresso: "☕ إسبريسو",
                 catLatte: "☕ كافيه لاتيه",
                 catCappuccino: "☕ الكابوتشينو",
@@ -703,45 +704,22 @@
                 currency: "دينار",
                 tableModalTitle: "إدارة الطاولات",
                 btnAddTable: "إضافة",
-                existingTablesLabel: "الطاولات المتاحة:"
+                existingTablesLabel: "الطاولات المتاحة:",
+                ingredientsLabel: "المكونات وتفاصيل المنتج:",
+                priceLabel: "السعر:"
             }
         };
 
         let defaultMenuItems = [
-            // ☕ ئێسپڕێسۆ
-            { id: '1', name: 'سنگڵ ئێسپڕێسۆ', name_en: 'Single Espresso', name_ar: 'إسبريسو سينجل', category: 'ئێسپڕێسۆ', price: '2,500', desc: 'قاوەی ئێسپڕێسۆی شۆتی تاک و خەست', img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400' },
-            { id: '2', name: 'دۆبڵ ئێسپڕێسۆ', name_en: 'Double Espresso', name_ar: 'إسبريسو دبل', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'دوو شۆتی ئێسپڕێسۆی خەستی بێ شەکەر', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
-            { id: '3', name: 'ئێسپڕێسۆ ماکیاتۆ', name_en: 'Espresso Macchiato', name_ar: 'إسبريسو ماكياتو', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'ئێسپڕێسۆ لەگەڵ کەمێک کەفی شیری گەرم', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
-            { id: '4', name: 'ئێسپڕێسۆ کۆن پانا', name_en: 'Espresso Con Panna', name_ar: 'إسبريسو كون بانا', category: 'ئێسپڕێسۆ', price: '3,500', desc: 'ئێسپڕێسۆ لەگەڵ کرێمی تۆپکراوی شیلگێر', img: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?w=400' },
-            { id: '5', name: 'ئایس ئێسپڕێسۆ شۆت', name_en: 'Iced Espresso Shot', name_ar: 'آيس إسبريسو شوت', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'ئێسپڕێسۆی ساردکراوە بە بەفر', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
-
-            // ☕ کافێ لەتێ
-            { id: '6', name: 'کافێ لەتێی ڕەسەن', name_en: 'Classic Caffè Latte', name_ar: 'كافيه لاتيه كلاسيك', category: 'کافێ لەتێ', price: '3,500', desc: 'ئێسپڕێسۆ لەگەڵ شیری گەرم و کەف', img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400' },
-            { id: '7', name: 'وەنیلا لەتێ', name_en: 'Vanilla Latte', name_ar: 'فانيليا لاتيه', category: 'کافێ لەتێ', price: '4,000', desc: 'کافێ لەتێ لەگەڵ سۆس و نەکەی وەنیلای فرێش', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
-            { id: '8', name: 'ئایس لەتێ (سارد)', name_en: 'Iced Latte', name_ar: 'آيس لاتيه بارد', category: 'کافێ لەتێ', price: '4,000', desc: 'قاوەی سارد لەگەڵ شیر و بەفر', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
-            { id: '9', name: 'فلات وایت (Flat White)', name_en: 'Flat White', name_ar: 'فلات وايت', category: 'کافێ لەتێ', price: '4,000', desc: 'دۆبڵ ئێسپڕێسۆ لەگەڵ شیری مایکرۆفۆمی گەرم', img: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=400' },
-            { id: '10', name: 'سۆڵتێد کارامێل لەتێ', name_en: 'Salted Caramel Latte', name_ar: 'سولتد كراميل لاتيه', category: 'کافێ لەتێ', price: '4,500', desc: 'کافێ لەتێ لەگەڵ کارامێلی سوێر کراو', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
-
-            // ☕ قاوە
-            { id: '11', name: 'قاوەی تورکی', name_en: 'Turkish Coffee', name_ar: 'قهوة تركية', category: 'قاوە', price: '2,000', desc: 'قاوەی تورکی کەفدار و خەست', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
-            { id: '12', name: 'ئەمریکانۆ', name_en: 'Americano Coffee', name_ar: 'أمريكانو', category: 'قاوە', price: '3,000', desc: 'ئێسپڕێسۆی خاوێن لەگەڵ ئاوی گەرم', img: 'https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=400' },
-
-            // ☕ کاپوچینۆ
-            { id: '13', name: 'کاپوچینۆی ئیتالی', name_en: 'Italian Cappuccino', name_ar: 'كابوتشينو إيطالي', category: 'کاپوچینۆ', price: '3,500', desc: 'کاپوچینۆ لەگەڵ کەفی شیری تازە', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
-            { id: '14', name: 'کاپوچینۆی کارامێل', name_en: 'Caramel Cappuccino', name_ar: 'كابوتشينو كراميل', category: 'کاپوچینۆ', price: '4,000', desc: 'کاپوچینۆ لەگەڵ سۆسی کارامێلی نازک', img: 'https://images.unsplash.com/photo-1585495403337-781a70ff5f57?w=400' },
-
-            // 🍰 شیرینی
-            { id: '15', name: 'شیرینی بەقلاوە', name_en: 'Baklava', name_ar: 'بقلاوة بالفستق', category: 'شیرینی', price: '3,000', desc: 'بەقلاوەی فستقی بەتام و نازک', img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400' },
-            { id: '16', name: 'واڵفڵ بە میوە', name_en: 'Fruit Waffle', name_ar: 'وافل بالمواكه', category: 'شیرینی', price: '5,000', desc: 'واڵفڵی گەرم لەگەڵ موز و ستۆبێری و شوکۆلاتە', img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400' },
-
-            // 🎂 کێک
-            { id: '17', name: 'کێکی شوکۆلاتەی ڕەش', name_en: 'Dark Chocolate Cake', name_ar: 'كعكة الشوكولاتة الداكنة', category: 'کێک', price: '4,000', desc: 'کێکی شوکۆلاتەی خەستی گەرم', img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400' },
-            { id: '18', name: 'چیزکێکی ستۆبێری', name_en: 'Strawberry Cheesecake', name_ar: 'تشيز كيك الفراولة', category: 'کێک', price: '4,500', desc: 'چیزکێکی کرێمی لەگەڵ سۆسی فرێشی ستۆبێری', img: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400' },
-            { id: '19', name: 'کێکی ڕێد ڤێلڤێت', name_en: 'Red Velvet Cake', name_ar: 'كعكة ريد فيلفيت', category: 'کێک', price: '4,500', desc: 'کێکی سووری نەرم لەگەڵ کرێمی پەشێو', img: 'https://images.unsplash.com/photo-1616541861933-281b9542e8d3?w=400' },
-
-            // 🍦 ساردەمەنی
-            { id: '20', name: 'ئایس کریمی ڤانیلا', name_en: 'Vanilla Ice Cream', name_ar: 'آيس كريم فانيليا', category: 'ساردەمەنی', price: '2,500', desc: 'ساردەمەنی ڤانیلا لەگەڵ سۆسی شوکۆلاتە', img: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?w=400' },
-            { id: '21', name: 'میکس ئایس کریم', name_en: 'Mixed Ice Cream Bowl', name_ar: 'آيس كريم مشكل', category: 'ساردەمەنی', price: '3,500', desc: 'سێ تۆپ ئایس کریمی جۆراوجۆر', img: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400' }
+            { id: '1', name: 'سنگڵ ئێسپڕێسۆ', name_en: 'Single Espresso', name_ar: 'إسبريسو سينجل', category: 'ئێسپڕێسۆ', price: '2,500', desc: 'قاوەی ئێسپڕێسۆی شۆتی تاک و خەست', img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800' },
+            { id: '2', name: 'دۆبڵ ئێسپڕێسۆ', name_en: 'Double Espresso', name_ar: 'إسبريسو دبل', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'دوو شۆتی ئێسپڕێسۆی خەستی بێ شەکەر', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800' },
+            { id: '3', name: 'ئێسپڕێسۆ ماکیاتۆ', name_en: 'Espresso Macchiato', name_ar: 'إسبريسو ماكياتو', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'ئێسپڕێسۆ لەگەڵ کەمێک کەفی شیری گەرم', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=800' },
+            { id: '4', name: 'کافێ لەتێی ڕەسەن', name_en: 'Classic Caffè Latte', name_ar: 'كافيه لاتيه كلاسيك', category: 'کافێ لەتێ', price: '3,500', desc: 'ئێسپڕێسۆ لەگەڵ شیری گەرم و کەف', img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=800' },
+            { id: '5', name: 'وەنیلا لەتێ', name_en: 'Vanilla Latte', name_ar: 'فانيليا لاتيه', category: 'کافێ لەتێ', price: '4,000', desc: 'کافێ لەتێ لەگەڵ سۆس و نەکەی وەنیلای فرێش', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=800' },
+            { id: '6', name: 'کاپوچینۆی ئیتالی', name_en: 'Italian Cappuccino', name_ar: 'كابوتشينو إيطالي', category: 'کاپوچینۆ', price: '3,500', desc: 'کاپوچینۆ لەگەڵ کەفی شیری تازە', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=800' },
+            { id: '7', name: 'شیرینی بەقلاوە', name_en: 'Baklava', name_ar: 'بقلاوة بالفستق', category: 'شیرینی', price: '3,000', desc: 'بەقلاوەی فستقی بەتام و نازک', img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=800' },
+            { id: '8', name: 'کێکی شوکۆلاتەی ڕەش', name_en: 'Dark Chocolate Cake', name_ar: 'كعكة الشوكولاتة الداكنة', category: 'کێک', price: '4,000', desc: 'کێکی شوکۆلاتەی خەستی گەرم', img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800' },
+            { id: '9', name: 'ئایس کریمی ڤانیلا', name_en: 'Vanilla Ice Cream', name_ar: 'آيس كريم فانيليا', category: 'ساردەمەنی', price: '2,500', desc: 'ساردەمەنی ڤانیلا لەگەڵ سۆسی شوکۆلاتە', img: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?w=800' }
         ];
 
         let menuItems = [];
@@ -773,7 +751,6 @@
                 }
             }
             updateTableDisplay();
-
             cart = [];
             updateCartUI();
         });
@@ -788,7 +765,7 @@
             document.getElementById('txtLoading').innerText = t.loading;
             document.getElementById('txtCartTitle').innerHTML = `<i class="fa-solid fa-cart-shopping ${isRtl ? 'ml-2' : 'mr-2'}"></i> ${t.cartTitle}`;
             document.getElementById('txtGrandTotalLabel').innerText = t.grandTotal;
-            document.getElementById('txtBtnPrint').innerHTML = `<i class="fa-solid fa-print ${isRtl ? 'ml-1' : 'mr-1'}"></i> ${t.btnPrint}`;
+            document.getElementById('txtBtnPrintTop').innerHTML = `<i class="fa-solid fa-print ${isRtl ? 'ml-1' : 'mr-1'}"></i> ${t.btnPrintTop}`;
             document.getElementById('txtBtnWhatsapp').innerText = t.btnWhatsapp;
             document.getElementById('txtTableLabel').innerText = t.tableLabel;
             document.getElementById('txtAddTable').innerText = t.addTable;
@@ -803,7 +780,6 @@
             
             document.getElementById('txtCategoriesPanelTitle').innerHTML = `<i class="fa-solid fa-layer-group text-[#8c5830]"></i> ${t.categoriesPanelTitle}`;
             document.getElementById('catAll').innerText = t.catAll;
-            document.getElementById('catCoffee').innerText = t.catCoffee;
             document.getElementById('catEspresso').innerText = t.catEspresso;
             document.getElementById('catLatte').innerText = t.catLatte;
             document.getElementById('catCappuccino').innerText = t.catCappuccino;
@@ -893,6 +869,36 @@
             modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
         }
 
+        function openProductModal(id) {
+            const item = menuItems.find(i => i.id == id);
+            if(!item) return;
+
+            const t = translations[currentLang];
+            const itemName = currentLang === 'en' ? (item.name_en || item.name) : (currentLang === 'ar' ? (item.name_ar || item.name) : item.name);
+            const itemDesc = currentLang === 'en' ? (item.desc_en || item.desc) : (currentLang === 'ar' ? (item.desc_ar || item.desc) : item.desc);
+
+            const container = document.getElementById('modalProductContent');
+            container.innerHTML = `
+                <img src="${item.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800'}" class="w-full h-52 object-cover rounded-xl border border-[#8c5830]/30" alt="${itemName}">
+                <div>
+                    <h3 class="font-extrabold text-lg text-[#3c1e0e] mb-1">${itemName}</h3>
+                    <div class="text-xs text-[#8c5830] font-bold mb-3">${item.category} | ${t.priceLabel} ${item.price} ${t.currency}</div>
+                </div>
+                <div class="bg-amber-50/80 p-3.5 rounded-xl border border-[#8c5830]/20">
+                    <div class="text-xs font-bold text-[#522e1b] mb-1"><i class="fa-solid fa-circle-info ml-1 text-[#8c5830]"></i> ${t.ingredientsLabel}</div>
+                    <p class="text-xs text-[#2c160b] leading-relaxed">${itemDesc || 'هیچ پێکهاتەیەک تۆمار نەکراوە.'}</p>
+                </div>
+                <button onclick="addToCart('${item.id}'); closeProductModal(); toggleCartModal();" class="w-full bg-[#6b3e23] hover:bg-[#522e1b] text-white py-3 rounded-xl font-bold text-xs transition shadow flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-cart-plus"></i> زیادکردن بۆ سەبەتە و داواکردن
+                </button>
+            `;
+            document.getElementById('productDetailModal').style.display = 'flex';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productDetailModal').style.display = 'none';
+        }
+
         function openAdminModal() {
             if(!isAdmin) {
                 const pass = prompt("پاسپۆردی بەڕێوەبەر بنووسە:");
@@ -924,12 +930,12 @@
             }
 
             menuItems.forEach(i => {
-                const itemName = i.name || i.name_ckb || 'بەرهەم';
+                const itemName = i.name || 'بەرهەم';
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between p-2.5 bg-white/90 rounded-xl border border-[#8c5830]/20 text-xs shadow-sm hover:border-[#8c5830] transition';
                 row.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=100'}" class="w-10 h-10 rounded-lg object-cover border border-[#8c5830]/30">
+                        <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400'}" class="w-16 h-9 rounded-lg object-cover border border-[#8c5830]/30">
                         <div>
                             <div class="font-bold text-[#2c160b] text-sm">${itemName}</div>
                             <div class="text-[11px] text-[#8c5830]">${i.category} | ${i.price}</div>
@@ -965,7 +971,51 @@
             }
         }
 
-        // ADD ITEM VIA ADMIN (Fixed to use standard columns 'name' and 'desc')
+        // AUTOMATIC 16:9 IMAGE CONVERTER FUNCTION
+        function processImageTo169(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const targetWidth = 1280;
+                    const targetHeight = 720; // 16:9 ratio
+                    canvas.width = targetWidth;
+                    canvas.height = targetHeight;
+                    const ctx = canvas.getContext('2d');
+
+                    // Fill background with warm beige color
+                    ctx.fillStyle = '#f7f1e5';
+                    ctx.fillRect(0, 0, targetWidth, targetHeight);
+
+                    const srcWidth = img.width;
+                    const srcHeight = img.height;
+                    const srcAspect = srcWidth / srcHeight;
+                    const targetAspect = targetWidth / targetHeight;
+
+                    let renderWidth, renderHeight, offsetX, offsetY;
+
+                    if (srcAspect > targetAspect) {
+                        renderHeight = targetHeight;
+                        renderWidth = targetHeight * srcAspect;
+                        offsetX = (targetWidth - renderWidth) / 2;
+                        offsetY = 0;
+                    } else {
+                        renderWidth = targetWidth;
+                        renderHeight = targetWidth / srcAspect;
+                        offsetX = 0;
+                        offsetY = (targetHeight - renderHeight) / 2;
+                    }
+
+                    ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
+                    const base64String = canvas.toDataURL('image/jpeg', 0.9);
+                    callback(base64String);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         const form = document.getElementById('itemForm');
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -981,11 +1031,9 @@
             }
 
             const file = fileInput.files[0];
-            const reader = new FileReader();
 
-            reader.onload = async function(event) {
-                const base64Img = event.target.result;
-
+            // Automatically convert the uploaded image (e.g. 1:1) to 16:9 aspect ratio
+            processImageTo169(file, async function(base64Img) {
                 if(window.supabase) {
                     const { error } = await window.supabase
                         .from('menu_items')
@@ -995,7 +1043,7 @@
                         alert('هەڵە لە زیادکردن: ' + error.message);
                     } else {
                         form.reset();
-                        alert("بەرهەمەکە بە سەرکەوتوویی زیادکرا!");
+                        alert("بەرهەمەکە بە سەرکەوتوویی زیادکرا و وێنەکەی بوو بە ١٦:٩!");
                         await fetchMenuFromSupabase();
                         renderAdminItemsList();
                     }
@@ -1006,13 +1054,11 @@
                     };
                     menuItems.push(newItem);
                     form.reset();
-                    alert("بەرهەمەکە بە سەرکەوتوویی زیادکرا!");
+                    alert("بەرهەمەکە بە سەرکەوتوویی زیادکرا و وێنەکەی بوو بە ١٦:٩!");
                     renderMenu();
                     renderAdminItemsList();
                 }
-            };
-
-            reader.readAsDataURL(file);
+            });
         });
 
         function addToCart(id) {
@@ -1057,7 +1103,7 @@
             let totalSum = 0;
 
             cart.forEach(i => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name) : (currentLang === 'ar' ? (i.name_ar || i.name) : i.name);
                 const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
                 const itemTotal = numericPrice * i.qty;
                 totalSum += itemTotal;
@@ -1083,7 +1129,7 @@
             const currentTable = localStorage.getItem('coffee_table_num') || t.notSet;
             let itemsSummary = [];
             cart.forEach(i => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name) : (currentLang === 'ar' ? (i.name_ar || i.name) : i.name);
                 const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
                 const itemTotal = numericPrice * i.qty;
                 itemsSummary.push(`${i.qty}x ${itemName} (${itemTotal.toLocaleString()} ${t.currency})`);
@@ -1114,7 +1160,7 @@
             let totalSum = 0;
 
             cart.forEach((i, idx) => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name) : (currentLang === 'ar' ? (i.name_ar || i.name) : i.name);
                 const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
                 const itemTotal = numericPrice * i.qty;
                 totalSum += itemTotal;
@@ -1131,20 +1177,6 @@
 
             document.getElementById('invPrintGrandTotal').innerText = totalSum.toLocaleString() + ` ${translations[currentLang].currency}`;
             window.print();
-        }
-
-        function triggerSendWhatsApp(e) {
-            if(cart.length === 0) {
-                e.preventDefault();
-                alert(translations[currentLang].emptyCart);
-                return;
-            }
-
-            setTimeout(() => {
-                cart = [];
-                updateCartUI();
-                toggleCartModal();
-            }, 300);
         }
 
         function callWaiter() {
@@ -1197,22 +1229,22 @@
         function renderMenu() {
             const grid = document.getElementById('menuGrid');
             grid.innerHTML = '';
-            const query = document.getElementById('searchInput').value.toLowerCase();
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
             const t = translations[currentLang];
-
-            const cleanTargetCat = currentCat.replace(/[^\w\s\u0600-\u06FF]/gi, '').trim();
 
             let list = currentCat === 'هەمووی' 
                 ? menuItems 
                 : menuItems.filter(i => {
-                    const itemCatClean = (i.category || '').replace(/[^\w\s\u0600-\u06FF]/gi, '').trim();
-                    return itemCatClean.includes(cleanTargetCat) || cleanTargetCat.includes(itemCatClean);
+                    if (!i.category) return false;
+                    const catTarget = currentCat.trim().toLowerCase();
+                    const itemCategory = i.category.trim().toLowerCase();
+                    return itemCategory.includes(catTarget) || catTarget.includes(itemCategory);
                 });
 
             if(query) {
                 list = list.filter(i => {
-                    const name = (i.name || i.name_ckb || '').toLowerCase();
-                    const desc = (i.desc || i.desc_ckb || '').toLowerCase();
+                    const name = (i.name || '').toLowerCase();
+                    const desc = (i.desc || '').toLowerCase();
                     return name.includes(query) || desc.includes(query);
                 });
             }
@@ -1223,19 +1255,20 @@
             }
 
             list.forEach(i => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
-                const itemDesc = currentLang === 'en' ? (i.desc_en || i.desc || i.desc_ckb) : (currentLang === 'ar' ? (i.desc_ar || i.desc || i.desc_ckb) : (i.desc || i.desc_ckb));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name) : (currentLang === 'ar' ? (i.name_ar || i.name) : i.name);
+                const itemDesc = currentLang === 'en' ? (i.desc_en || i.desc) : (currentLang === 'ar' ? (i.desc_ar || i.desc) : i.desc);
 
                 const card = document.createElement('div');
                 card.className = 'item-card glass-card';
+                card.onclick = () => openProductModal(i.id);
                 card.innerHTML = `
-                    <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400'}" class="w-full h-40 object-cover bg-amber-100" alt="${itemName}">
+                    <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800'}" class="w-full h-40 object-cover bg-amber-100" alt="${itemName}">
                     <div class="p-3.5 flex-1 flex flex-col justify-between">
                         <div>
                             <div class="font-bold text-sm mb-1 text-[#3c1e0e]">${itemName}</div>
-                            <div class="text-xs text-[#8c7a6b] mb-3">${itemDesc || ''}</div>
+                            <div class="text-xs text-[#8c7a6b] mb-3 line-clamp-2">${itemDesc || ''}</div>
                         </div>
-                        <div class="flex justify-between items-center mt-auto pt-2 border-t border-[#8c5830]/20">
+                        <div class="flex justify-between items-center mt-auto pt-2 border-t border-[#8c5830]/20" onclick="event.stopPropagation()">
                             <span class="text-[#6b3e23] font-extrabold text-sm">${i.price} ${t.currency}</span>
                             <button class="bg-[#6b3e23] hover:bg-[#522e1b] text-white border-none w-9 h-9 rounded-xl font-bold flex items-center justify-center cursor-pointer transition shadow" onclick="addToCart('${i.id}')" title="زیادکردن بۆ سەبەتە">
                                 <i class="fa-solid fa-cart-plus text-xs"></i>
