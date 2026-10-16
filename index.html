@@ -174,7 +174,7 @@
             border-radius: 16px;
             overflow: hidden;
             cursor: pointer;
-            height: 90px;
+            height: 85px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -200,8 +200,10 @@
             z-index: 2;
             color: #ffffff;
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+            text-align: center;
+            padding: 0 4px;
         }
 
         /* CENTER FEATURED COFFEE BANNER WITH INTEGRATED WHITE BADGE */
@@ -394,6 +396,8 @@
                     <label class="block mb-1 text-xs font-bold text-[#522e1b]">بەش (Category):</label>
                     <select id="dbItemCategory" class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
                         <option value="قاوە">☕ قاوە</option>
+                        <option value="ئێسپڕێسۆ">☕ ئێسپڕێسۆ</option>
+                        <option value="کافێ لەتێ">☕ کافێ لەتێ</option>
                         <option value="کاپوچینۆ">☕ کاپوچینۆ</option>
                         <option value="شیرینی">🍰 شیرینی</option>
                         <option value="کێک">🎂 کێک</option>
@@ -467,7 +471,7 @@
     </div>
 
     <div class="welcome-ticker shadow-inner">
-        <span id="txtMarquee">☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین قاوە، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎</span>
+        <span id="txtMarquee">☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین قاوە، ئێسپڕێسۆ، کافێ لەتێ، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎</span>
     </div>
 
     <!-- Header Section -->
@@ -524,6 +528,14 @@
                         <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400" alt="Coffee">
                         <span id="catCoffee">☕ قاوە</span>
                     </div>
+                    <div class="cat-card" onclick="filterCategory('ئێسپڕێسۆ', this)">
+                        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400" alt="Espresso">
+                        <span id="catEspresso">☕ ئێسپڕێسۆ</span>
+                    </div>
+                    <div class="cat-card" onclick="filterCategory('کافێ لەتێ', this)">
+                        <img src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400" alt="Caffe Latte">
+                        <span id="catLatte">☕ کافێ لەتێ</span>
+                    </div>
                     <div class="cat-card" onclick="filterCategory('کاپوچینۆ', this)">
                         <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=400" alt="Cappuccino">
                         <span id="catCappuccino">☕ کاپوچینۆ</span>
@@ -556,7 +568,7 @@
                         </div>
                     </div>
                     <div class="hidden sm:block text-white text-right max-w-xs">
-                        <p class="text-xs font-bold leading-relaxed drop-shadow">باشترین تامی قاوە و شیرینی بەرزکوالێتی لە که‌شێکی ئارامدا</p>
+                        <p class="text-xs font-bold leading-relaxed drop-shadow">باشترین تامی قاوە، لەتێ، ئێسپڕێسۆ و شیرینی بەرزکوالێتی لە که‌شێکی ئارامدا</p>
                     </div>
                 </div>
 
@@ -594,7 +606,7 @@
                 notSet: "دیاری نەکراوە",
                 addTable: "زیادکردنی مێز",
                 adminBtn: "بەڕێوەبەر",
-                marquee: "☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین قاوە، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎",
+                marquee: "☕ بەخێر هاتن بۆ قاوەخانەکەمان! لێرە خۆشترین قاوە، ئێسپڕێسۆ، کافێ لەتێ، شیرینی و ساردەمەنی ناوازە چاوەڕوانت دەکات ✨ فەرموون کاتێکی خۆش بەسەر ببەن! 🤎",
                 mainHeading: "قاوەخانە | Coffee House",
                 subTitle: "مێنیووی دیجیتاڵی بەرهەمەکان",
                 location: "سلێمانی، بەردەرکی سەرای",
@@ -605,6 +617,8 @@
                 categoriesPanelTitle: "بەشەکانی مێنیوو",
                 catAll: "هەمووی",
                 catCoffee: "☕ قاوە",
+                catEspresso: "☕ ئێسپڕێسۆ",
+                catLatte: "☕ کافێ لەتێ",
                 catCappuccino: "☕ کاپوچینۆ",
                 catSweets: "🍰 شیرینی",
                 catCake: "🎂 کێک",
@@ -629,7 +643,7 @@
                 notSet: "Not Set",
                 addTable: "Add Table",
                 adminBtn: "Admin",
-                marquee: "☕ Welcome to Coffee House! Discover our finest coffee, sweets, and ice cream ✨ Enjoy your time! 🤎",
+                marquee: "☕ Welcome to Coffee House! Discover our finest espresso, caffè latte, sweets, and ice cream ✨ Enjoy your time! 🤎",
                 mainHeading: "Coffee House",
                 subTitle: "Digital Product Menu",
                 location: "Sulaymaniyah, Saray",
@@ -640,6 +654,8 @@
                 categoriesPanelTitle: "Menu Categories",
                 catAll: "All",
                 catCoffee: "☕ Coffee",
+                catEspresso: "☕ Espresso",
+                catLatte: "☕ Caffè Latte",
                 catCappuccino: "☕ Cappuccino",
                 catSweets: "🍰 Sweets",
                 catCake: "🎂 Cake",
@@ -664,7 +680,7 @@
                 notSet: "غير محدد",
                 addTable: "إضافة طاولة",
                 adminBtn: "المشرف",
-                marquee: "☕ أهلاً بكم في مقهانا! استمتعوا بأجود أنواع القهوة، الحلويات، والآيس كريم ✨ نتمنى لكم وقتاً ممتعاً! 🤎",
+                marquee: "☕ أهلاً بكم في مقهانا! استمتعوا بأجود أنواع الإسبريسو، كافيه لاتيه، الحلويات، والآيس كريم ✨ نتمنى لكم وقتاً ممتعاً! 🤎",
                 mainHeading: "المقهى | Coffee House",
                 subTitle: "القائمة الرقمية للمنتجات",
                 location: "السليمانية، السراي",
@@ -675,6 +691,8 @@
                 categoriesPanelTitle: "أقسام القائمة",
                 catAll: "الكل",
                 catCoffee: "☕ القهوة",
+                catEspresso: "☕ إسبريسو",
+                catLatte: "☕ كافيه لاتيه",
                 catCappuccino: "☕ الكابوتشينو",
                 catSweets: "🍰 الحلويات",
                 catCake: "🎂 الكعك",
@@ -690,34 +708,40 @@
         };
 
         let defaultMenuItems = [
+            // ☕ ئێسپڕێسۆ (ESPRESSO CATEGORY)
+            { id: '1', name_ckb: 'سنگڵ ئێسپڕێسۆ', name_en: 'Single Espresso', name_ar: 'إسبريسو سينجل', category: 'ئێسپڕێسۆ', price: '2,500', desc_ckb: 'قاوەی ئێسپڕێسۆی شۆتی تاک و خەست', desc_en: 'Rich and authentic single espresso shot', desc_ar: 'شوت إسبريسو غني وأصيل', img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400' },
+            { id: '2', name_ckb: 'دۆبڵ ئێسپڕێسۆ', name_en: 'Double Espresso', name_ar: 'إسبريسو دبل', category: 'ئێسپڕێسۆ', price: '3,000', desc_ckb: 'دوو شۆتی ئێسپڕێسۆی خەستی بێ شەکەر', desc_en: 'Double shot of concentrated strong espresso', desc_ar: 'جرعتان من الإسبريسو المركّز القوي', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
+            { id: '3', name_ckb: 'ئێسپڕێسۆ ماکیاتۆ', name_en: 'Espresso Macchiato', name_ar: 'إسبريسو ماكياتو', category: 'ئێسپڕێسۆ', price: '3,000', desc_ckb: 'ئێسپڕێسۆ لەگەڵ کەمێک کەفی شیری گەرم', desc_en: 'Espresso topped with a dollop of milk foam', desc_ar: 'إسبريسو مع لمسة من رغوة الحليب المبخر', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
+            { id: '4', name_ckb: 'ئێسپڕێسۆ کۆن پانا', name_en: 'Espresso Con Panna', name_ar: 'إسبريسو كون بانا', category: 'ئێسپڕێسۆ', price: '3,500', desc_ckb: 'ئێسپڕێسۆ لەگەڵ کرێمی تۆپکراوی شیلگێر', desc_en: 'Espresso shot topped with whipped cream', desc_ar: 'جرعة إسبريسو تعلوها الكريمة المخفوقة', img: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?w=400' },
+            { id: '5', name_ckb: 'ئایس ئێسپڕێسۆ شۆت', name_en: 'Iced Espresso Shot', name_ar: 'آيس إسبريسو شوت', category: 'ئێسپڕێسۆ', price: '3,000', desc_ckb: 'ئێسپڕێسۆی ساردکراوە بە بەفر', desc_en: 'Chilled espresso over clear ice cubes', desc_ar: 'إسبريسو بارد ومُنعش مع قطع الثلج', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
+
+            // ☕ کافێ لەتێ (CAFFÈ LATTE CATEGORY)
+            { id: '6', name_ckb: 'کافێ لەتێی ڕەسەن', name_en: 'Classic Caffè Latte', name_ar: 'كافيه لاتيه كلاسيك', category: 'کافێ لەتێ', price: '3,500', desc_ckb: 'ئێسپڕێسۆ لەگەڵ شیری گەرم و کەف', desc_en: 'Smooth espresso with steamed milk and light foam', desc_ar: 'إسبريسو ناعم مع حليب مبخر ورغوة خفيفة', img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400' },
+            { id: '7', name_ckb: 'وەنیلا لەتێ', name_en: 'Vanilla Latte', name_ar: 'فانيليا لاتيه', category: 'کافێ لەتێ', price: '4,000', desc_ckb: 'کافێ لەتێ لەگەڵ سۆس و نەکەی وەنیلای فرێش', desc_en: 'Caffè latte infused with sweet vanilla syrup', desc_ar: 'كافيه لاتيه مع شراب الفانيليا اللذيذ', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
+            { id: '8', name_ckb: 'ئایس لەتێ (سارد)', name_en: 'Iced Latte', name_ar: 'آيس لاتيه بارد', category: 'کافێ لەتێ', price: '4,000', desc_ckb: 'قاوەی سارد لەگەڵ شیر و بەفر', desc_en: 'Chilled espresso with fresh cold milk & ice', desc_ar: 'قهوة باردة مع الحليب الطازج والثلج', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
+            { id: '9', name_ckb: 'فلات وایت (Flat White)', name_en: 'Flat White', name_ar: 'فلات وايت', category: 'کافێ لەتێ', price: '4,000', desc_ckb: 'دۆبڵ ئێسپڕێسۆ لەگەڵ شیری مایکرۆفۆمی گەرم', desc_en: 'Double shot espresso with silky microfoam milk', desc_ar: 'دبل إسبريسو مع حليب الميكروفوم الحريري', img: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=400' },
+            { id: '10', name_ckb: 'سۆڵتێد کارامێل لەتێ', name_en: 'Salted Caramel Latte', name_ar: 'سولتد كراميل لاتيه', category: 'کافێ لەتێ', price: '4,500', desc_ckb: 'کافێ لەتێ لەگەڵ کارامێلی سوێر کراو', desc_en: 'Latte topped with rich salted caramel sauce', desc_ar: 'لاتيه مع صوص الكراميل المملح الغني', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
+
             // ☕ قاوە
-            { id: '1', name_ckb: 'قاوەی ئێسپڕێسۆ', name_en: 'Espresso Coffee', name_ar: 'قهوة إسبريسو', category: 'قاوە', price: '2,500', desc_ckb: 'قاوەی ئێسپڕێسۆی خەست و ڕەسەن', desc_en: 'Rich and authentic single espresso shot', desc_ar: 'إسبريسو غني وأصيل', img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400' },
-            { id: '2', name_ckb: 'کافێ لەتێ', name_en: 'Caffè Latte', name_ar: 'كافيه لاتيه', category: 'قاوە', price: '3,500', desc_ckb: 'ئێسپڕێسۆ لەگەڵ شیری گەرم و کەف', desc_en: 'Espresso with steamed milk and light foam', desc_ar: 'إسبريسو مع حليب مبخر ورغوة خفيفة', img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400' },
-            { id: '3', name_ckb: 'ئایس لەتێ (سارد)', name_en: 'Iced Latte', name_ar: 'آيس لاتيه', category: 'قاوە', price: '4,000', desc_ckb: 'قاوەی سارد لەگەڵ شیر و بەفر', desc_en: 'Chilled coffee with milk and ice cubes', desc_ar: 'قهوة باردة مع الحليب والثلج', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
-            { id: '4', name_ckb: 'قاوەی تورکی', name_en: 'Turkish Coffee', name_ar: 'قهوة تركية', category: 'قاوە', price: '2,000', desc_ckb: 'قاوەی تورکی کەفدار و خەست', desc_en: 'Traditional roasted Turkish coffee', desc_ar: 'قهوة تركية تقليدية غنية بالرغوة', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
-            { id: '5', name_ckb: 'ئەمریکانۆ', name_en: 'Americano Coffee', name_ar: 'أمريكانو', category: 'قاوە', price: '3,000', desc_ckb: 'ئێسپڕێسۆی خاوێن لەگەڵ ئاوی گەرم', desc_en: 'Espresso diluted with hot water', desc_ar: 'إسبريسو مخفف بالماء الساخن', img: 'https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=400' },
-            { id: '6', name_ckb: 'ماکیاتۆ کارامێل', name_en: 'Caramel Macchiato', name_ar: 'كاراميل ماكياتو', category: 'قاوە', price: '4,500', desc_ckb: 'ئێسپڕێسۆ لەگەڵ سۆسی کارامێل و شیر', desc_en: 'Espresso with vanilla and caramel drizzle', desc_ar: 'إسبريسو مع الفانيليا وصوص الكراميل', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
+            { id: '11', name_ckb: 'قاوەی تورکی', name_en: 'Turkish Coffee', name_ar: 'قهوة تركية', category: 'قاوە', price: '2,000', desc_ckb: 'قاوەی تورکی کەفدار و خەست', desc_en: 'Traditional roasted Turkish coffee', desc_ar: 'قهوة تركية تقليدية غنية بالرغوة', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
+            { id: '12', name_ckb: 'ئەمریکانۆ', name_en: 'Americano Coffee', name_ar: 'أمريكانو', category: 'قاوە', price: '3,000', desc_ckb: 'ئێسپڕێسۆی خاوێن لەگەڵ ئاوی گەرم', desc_en: 'Espresso diluted with hot water', desc_ar: 'إسبريسو مخفف بالماء الساخن', img: 'https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=400' },
 
             // ☕ کاپوچینۆ
-            { id: '7', name_ckb: 'کاپوچینۆی ئیتالی', name_en: 'Italian Cappuccino', name_ar: 'كابوتشينو إيطالي', category: 'کاپوچینۆ', price: '3,500', desc_ckb: 'کاپوچینۆ لەگەڵ کەفی شیری تازە', desc_en: 'Classic cappuccino with rich milk foam', desc_ar: 'كابوتشينو كلاسيكي مع رغوة الحليب الغنية', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
-            { id: '8', name_ckb: 'کاپوچینۆی کارامێل', name_en: 'Caramel Cappuccino', name_ar: 'كابوتشينو كراميل', category: 'کاپوچینۆ', price: '4,000', desc_ckb: 'کاپوچینۆ لەگەڵ سۆسی کارامێلی نازک', desc_en: 'Cappuccino topped with sweet caramel sauce', desc_ar: 'كابوتشينو مع صوص الكراميل اللذيذ', img: 'https://images.unsplash.com/photo-1585495403337-781a70ff5f57?w=400' },
+            { id: '13', name_ckb: 'کاپوچینۆی ئیتالی', name_en: 'Italian Cappuccino', name_ar: 'كابوتشينو إيطالي', category: 'کاپوچینۆ', price: '3,500', desc_ckb: 'کاپوچینۆ لەگەڵ کەفی شیری تازە', desc_en: 'Classic cappuccino with rich milk foam', desc_ar: 'كابوتشينو كلاسيكي مع رغوة الحليب الغنية', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
+            { id: '14', name_ckb: 'کاپوچینۆی کارامێل', name_en: 'Caramel Cappuccino', name_ar: 'كابوتشينو كراميل', category: 'کاپوچینۆ', price: '4,000', desc_ckb: 'کاپوچینۆ لەگەڵ سۆسی کارامێلی نازک', desc_en: 'Cappuccino topped with sweet caramel sauce', desc_ar: 'كابوتشينو مع صوص الكراميل اللذيذ', img: 'https://images.unsplash.com/photo-1585495403337-781a70ff5f57?w=400' },
 
             // 🍰 شیرینی
-            { id: '9', name_ckb: 'شیرینی بەقلاوە', name_en: 'Baklava', name_ar: 'بقلاوة بالفستق', category: 'شیرینی', price: '3,000', desc_ckb: 'بەقلاوەی فستقی بەتام و نازک', desc_en: 'Crispy pastry layers filled with pistachios', desc_ar: 'رقائق البقلاوة المليئة بالفستق الحلبي', img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400' },
-            { id: '10', name_ckb: 'واڵفڵ بە میوە', name_en: 'Fruit Waffle', name_ar: 'وافل بالمواكه', category: 'شیرینی', price: '5,000', desc_ckb: 'واڵفڵی گەرم لەگەڵ موز و ستۆبێری و شوکۆلاتە', desc_en: 'Fresh waffle with bananas, strawberries & chocolate', desc_ar: 'وافل طازج مع الموز والفراولة والشوكولاتة', img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400' },
+            { id: '15', name_ckb: 'شیرینی بەقلاوە', name_en: 'Baklava', name_ar: 'بقلاوة بالفستق', category: 'شیرینی', price: '3,000', desc_ckb: 'بەقلاوەی فستقی بەتام و نازک', desc_en: 'Crispy pastry layers filled with pistachios', desc_ar: 'رقائق البقلاوة المليئة بالفستق الحلبي', img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400' },
+            { id: '16', name_ckb: 'واڵفڵ بە میوە', name_en: 'Fruit Waffle', name_ar: 'وافل بالمواكه', category: 'شیرینی', price: '5,000', desc_ckb: 'واڵفڵی گەرم لەگەڵ موز و ستۆبێری و شوکۆلاتە', desc_en: 'Fresh waffle with bananas, strawberries & chocolate', desc_ar: 'وافل طازج مع الموز والفراولة والشوكولاتة', img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400' },
 
-            // 🎂 کێک (ENRICHED WITH ALL CAKE VARIETIES)
-            { id: '11', name_ckb: 'کێکی شوکۆلاتەی ڕەش', name_en: 'Dark Chocolate Cake', name_ar: 'كعكة الشوكولاتة الداكنة', category: 'کێک', price: '4,000', desc_ckb: 'کێکی شوکۆلاتەی خەستی گەرم', desc_en: 'Rich dark chocolate layer cake', desc_ar: 'كعكة الشوكولاتة الداكنة الغنية', img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400' },
-            { id: '12', name_ckb: 'چیزکێکی ستۆبێری', name_en: 'Strawberry Cheesecake', name_ar: 'تشيز كيك الفراولة', category: 'کێک', price: '4,500', desc_ckb: 'چیزکێکی کرێمی لەگەڵ سۆسی فرێشی ستۆبێری', desc_en: 'Creamy cheesecake topped with fresh strawberries', desc_ar: 'تشيز كيك كريمي مع الفراولة الطازجة', img: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400' },
-            { id: '13', name_ckb: 'کێکی ڕێد ڤێلڤێت', name_en: 'Red Velvet Cake', name_ar: 'كعكة ريد فيلفيت', category: 'کێک', price: '4,500', desc_ckb: 'کێکی سووری نەرم لەگەڵ کرێمی پەشێو', desc_en: 'Soft red velvet cake with cream cheese frosting', desc_ar: 'كعكة ريد فيلفيت ناعمة مع جبن الكريم', img: 'https://images.unsplash.com/photo-1616541861933-281b9542e8d3?w=400' },
-            { id: '14', name_ckb: 'کێکی تێرامیسو', name_en: 'Tiramisu Cake', name_ar: 'تيراميسو إيطالي', category: 'کێک', price: '5,000', desc_ckb: 'شیرینی ئیتالی بە تامی ئێسپڕێسۆ و ماسکارپۆنی', desc_en: 'Classic Italian tiramisu with coffee flavor', desc_ar: 'تيراميسو إيطالي كلاسيكي بنكهة الإسبريسو', img: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400' },
-            { id: '15', name_ckb: 'کێکی کاڕۆت (گێزەر)', name_en: 'Carrot Cake', name_ar: 'كعكة الجزر', category: 'کێک', price: '4,000', desc_ckb: 'کێکی گێزەر لەگەڵ گوێز و دارچینی', desc_en: 'Spiced carrot cake with walnuts and cream cheese', desc_ar: 'كعكة الجزر الغنية بالجوز والقرفة', img: 'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400' },
-            { id: '16', name_ckb: 'کێکی لیمۆی فرێش', name_en: 'Lemon Pound Cake', name_ar: 'كعكة الليمون المنعشة', category: 'کێک', price: '3,500', desc_ckb: 'کێکی نەرم بە تامی خۆشی لیمۆی سروشتی', desc_en: 'Moist pound cake infused with zesty fresh lemon', desc_ar: 'كعكة الليمون الطرية بنكهة الليمون المنعشة', img: 'https://images.unsplash.com/photo-1519869325930-281384150729?w=400' },
-            { id: '17', name_ckb: 'کێکی مۆز و گوێز', name_en: 'Banana Walnut Cake', name_ar: 'كعكة الموز والجوز', category: 'کێک', price: '4,000', desc_ckb: 'کێکی گەرم دروستکراو لە مۆز و گوێزی برژاو', desc_en: 'Sweet banana bread cake with roasted walnuts', desc_ar: 'كعكة الموز الشهية مع الجوز المحمص', img: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400' },
+            // 🎂 کێک
+            { id: '17', name_ckb: 'کێکی شوکۆلاتەی ڕەش', name_en: 'Dark Chocolate Cake', name_ar: 'كعكة الشوكولاتة الداكنة', category: 'کێک', price: '4,000', desc_ckb: 'کێکی شوکۆلاتەی خەستی گەرم', desc_en: 'Rich dark chocolate layer cake', desc_ar: 'كعكة الشوكولاتة الداكنة الغنية', img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400' },
+            { id: '18', name_ckb: 'چیزکێکی ستۆبێری', name_en: 'Strawberry Cheesecake', name_ar: 'تشيز كيك الفراولة', category: 'کێک', price: '4,500', desc_ckb: 'چیزکێکی کرێمی لەگەڵ سۆسی فرێشی ستۆبێری', desc_en: 'Creamy cheesecake topped with fresh strawberries', desc_ar: 'تشيز كيك كريمي مع الفراولة الطازجة', img: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400' },
+            { id: '19', name_ckb: 'کێکی ڕێد ڤێلڤێت', name_en: 'Red Velvet Cake', name_ar: 'كعكة ريد فيلفيت', category: 'کێک', price: '4,500', desc_ckb: 'کێکی سووری نەرم لەگەڵ کرێمی پەشێو', desc_en: 'Soft red velvet cake with cream cheese frosting', desc_ar: 'كعكة ريد فيلفيت ناعمة مع جبن الكريم', img: 'https://images.unsplash.com/photo-1616541861933-281b9542e8d3?w=400' },
 
             // 🍦 ساردەمەنی
-            { id: '18', name_ckb: 'ئایس کریمی ڤانیلا', name_en: 'Vanilla Ice Cream', name_ar: 'آيس كريم فانيليا', category: 'ساردەمەنی', price: '2,500', desc_ckb: 'ساردەمەنی ڤانیلا لەگەڵ سۆسی شوکۆلاتە', desc_en: 'Classic vanilla scoops with chocolate drizzle', desc_ar: 'آيس كريم الفانيليا مع صوص الشوكولاتة', img: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?w=400' },
-            { id: '19', name_ckb: 'میکس ئایس کریم', name_en: 'Mixed Ice Cream Bowl', name_ar: 'آيس كريم مشكل', category: 'ساردەمەنی', price: '3,500', desc_ckb: 'سێ تۆپ ئایس کریمی جۆراوجۆر', desc_en: 'Three scoops of assorted flavors', desc_ar: 'ثلاث كرات من آيس كريم النكهات المشكلة', img: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400' }
+            { id: '20', name_ckb: 'ئایس کریمی ڤانیلا', name_en: 'Vanilla Ice Cream', name_ar: 'آيس كريم فانيليا', category: 'ساردەمەنی', price: '2,500', desc_ckb: 'ساردەمەنی ڤانیلا لەگەڵ سۆسی شوکۆلاتە', desc_en: 'Classic vanilla scoops with chocolate drizzle', desc_ar: 'آيس كريم الفانيليا مع صوص الشوكولاتة', img: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?w=400' },
+            { id: '21', name_ckb: 'میکس ئایس کریم', name_en: 'Mixed Ice Cream Bowl', name_ar: 'آيس كريم مشكل', category: 'ساردەمەنی', price: '3,500', desc_ckb: 'سێ تۆپ ئایس کریمی جۆراوجۆر', desc_en: 'Three scoops of assorted flavors', desc_ar: 'ثلاث كرات من آيس كريم النكهات المشكلة', img: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400' }
         ];
 
         let menuItems = [];
@@ -780,6 +804,8 @@
             document.getElementById('txtCategoriesPanelTitle').innerHTML = `<i class="fa-solid fa-layer-group text-[#8c5830]"></i> ${t.categoriesPanelTitle}`;
             document.getElementById('catAll').innerText = t.catAll;
             document.getElementById('catCoffee').innerText = t.catCoffee;
+            document.getElementById('catEspresso').innerText = t.catEspresso;
+            document.getElementById('catLatte').innerText = t.catLatte;
             document.getElementById('catCappuccino').innerText = t.catCappuccino;
             document.getElementById('catSweets').innerText = t.catSweets;
             document.getElementById('catCake').innerText = t.catCake;
@@ -1148,7 +1174,6 @@
                     .from('menu_items')
                     .select('*');
 
-                // Fallback to default items if DB returns error or empty array
                 if (error || !data || data.length === 0) {
                     menuItems = defaultMenuItems;
                 } else {
@@ -1175,7 +1200,6 @@
             const query = document.getElementById('searchInput').value.toLowerCase();
             const t = translations[currentLang];
 
-            // Normalize category string for robust matching (removes emojis/extra whitespace)
             const cleanTargetCat = currentCat.replace(/[^\w\s\u0600-\u06FF]/gi, '').trim();
 
             let list = currentCat === 'هەمووی' 
