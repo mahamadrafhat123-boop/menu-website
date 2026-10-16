@@ -168,7 +168,6 @@
         }
         .item-card:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(107, 62, 35, 0.15); }
 
-        /* VISUAL CATEGORY CARD STYLING */
         .cat-card {
             position: relative;
             border-radius: 16px;
@@ -391,7 +390,7 @@
 
             <!-- Form to Add New Item -->
             <form id="itemForm" class="space-y-3 mb-6">
-                <div class="font-bold text-xs text-[#522e1b] mb-1 flex items-center gap-1"><i class="fa-solid fa-plus-circle"></i> زیادکردنی بەرهەمی نوێ (وێنە بە شێوەی ئۆتۆماتیکی دەبێتە 16:9):</div>
+                <div class="font-bold text-xs text-[#522e1b] mb-1 flex items-center gap-1"><i class="fa-solid fa-plus-circle"></i> زیادکردنی بەرهەمی نوێ (بەبێ سڕینەوە یان بڕینی بەشێک لە بەرهەم و باکگراوندەکەی):</div>
                 <div>
                     <label class="block mb-1 text-xs font-bold text-[#522e1b]">ناوی بەرهەم:</label>
                     <input type="text" id="dbItemName" required placeholder="نموونە: کاپوچینۆی ئیتالی" class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
@@ -416,7 +415,7 @@
                     <input type="text" id="dbItemDesc" placeholder="پێکهاتە و وردەکاری بەرهەمەکە..." class="w-full p-2.5 bg-white/90 border border-[#8c5830]/30 text-[#2c160b] rounded-xl text-xs outline-none focus:border-[#8c5830]">
                 </div>
                 <div>
-                    <label class="block mb-1 text-xs font-bold text-[#522e1b]">هەڵبژاردنی وێنە (هەر قەبارەیەک بێت دەگۆڕدرێت بۆ 16:9):</label>
+                    <label class="block mb-1 text-xs font-bold text-[#522e1b]">هەڵبژاردنی وێنە (بە تەواوی ڕەسمەکە و باکگراوندەکەی دەردەکەوێت):</label>
                     <input type="file" id="dbItemFile" accept="image/*" required class="w-full p-2 bg-white/90 border border-[#8c5830]/30 text-xs text-[#522e1b] rounded-xl cursor-pointer">
                 </div>
                 <button type="submit" class="w-full bg-[#6b3e23] hover:bg-[#522e1b] text-white font-bold py-2.5 rounded-xl text-xs cursor-pointer transition shadow">زیادکردن بۆ مێنیوو</button>
@@ -879,7 +878,7 @@
 
             const container = document.getElementById('modalProductContent');
             container.innerHTML = `
-                <img src="${item.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800'}" class="w-full h-52 object-cover rounded-xl border border-[#8c5830]/30" alt="${itemName}">
+                <img src="${item.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800'}" class="w-full h-52 object-contain bg-amber-50/50 rounded-xl border border-[#8c5830]/30" alt="${itemName}">
                 <div>
                     <h3 class="font-extrabold text-lg text-[#3c1e0e] mb-1">${itemName}</h3>
                     <div class="text-xs text-[#8c5830] font-bold mb-3">${item.category} | ${t.priceLabel} ${item.price} ${t.currency}</div>
@@ -935,7 +934,7 @@
                 row.className = 'flex items-center justify-between p-2.5 bg-white/90 rounded-xl border border-[#8c5830]/20 text-xs shadow-sm hover:border-[#8c5830] transition';
                 row.innerHTML = `
                     <div class="flex items-center gap-3">
-                        <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400'}" class="w-16 h-9 rounded-lg object-cover border border-[#8c5830]/30">
+                        <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400'}" class="w-16 h-9 rounded-lg object-contain bg-amber-50 border border-[#8c5830]/30">
                         <div>
                             <div class="font-bold text-[#2c160b] text-sm">${itemName}</div>
                             <div class="text-[11px] text-[#8c5830]">${i.category} | ${i.price}</div>
@@ -971,7 +970,7 @@
             }
         }
 
-        // AUTOMATIC 16:9 IMAGE CONVERTER FUNCTION
+        // FULL IMAGE & BACKGROUND PRESERVATION (FIT WITHOUT CROPPING)
         function processImageTo169(file, callback) {
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -985,30 +984,23 @@
                     const ctx = canvas.getContext('2d');
 
                     // Fill background with warm beige color
-                    ctx.fillStyle = '#f7f1e5';
+                    ctx.fillStyle = '#fdfbf7';
                     ctx.fillRect(0, 0, targetWidth, targetHeight);
 
                     const srcWidth = img.width;
                     const srcHeight = img.height;
-                    const srcAspect = srcWidth / srcHeight;
-                    const targetAspect = targetWidth / targetHeight;
 
-                    let renderWidth, renderHeight, offsetX, offsetY;
+                    // Calculate scale factor to FIT the entire image without any cropping
+                    const scale = Math.min(targetWidth / srcWidth, targetHeight / srcHeight);
+                    const renderWidth = srcWidth * scale;
+                    const renderHeight = srcHeight * scale;
 
-                    if (srcAspect > targetAspect) {
-                        renderHeight = targetHeight;
-                        renderWidth = targetHeight * srcAspect;
-                        offsetX = (targetWidth - renderWidth) / 2;
-                        offsetY = 0;
-                    } else {
-                        renderWidth = targetWidth;
-                        renderHeight = targetWidth / srcAspect;
-                        offsetX = 0;
-                        offsetY = (targetHeight - renderHeight) / 2;
-                    }
+                    // Center the full image on the 16:9 canvas
+                    const offsetX = (targetWidth - renderWidth) / 2;
+                    const offsetY = (targetHeight - renderHeight) / 2;
 
                     ctx.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
-                    const base64String = canvas.toDataURL('image/jpeg', 0.9);
+                    const base64String = canvas.toDataURL('image/jpeg', 0.92);
                     callback(base64String);
                 };
                 img.src = event.target.result;
@@ -1032,7 +1024,6 @@
 
             const file = fileInput.files[0];
 
-            // Automatically convert the uploaded image (e.g. 1:1) to 16:9 aspect ratio
             processImageTo169(file, async function(base64Img) {
                 if(window.supabase) {
                     const { error } = await window.supabase
@@ -1043,7 +1034,7 @@
                         alert('هەڵە لە زیادکردن: ' + error.message);
                     } else {
                         form.reset();
-                        alert("بەرهەمەکە بە سەرکەوتوویی زیادکرا و وێنەکەی بوو بە ١٦:٩!");
+                        alert("بەرهەمەکە بە تەواوی ڕەسمەکەیەوە و بە بێ بەشخواردن زیادکرا!");
                         await fetchMenuFromSupabase();
                         renderAdminItemsList();
                     }
@@ -1054,7 +1045,7 @@
                     };
                     menuItems.push(newItem);
                     form.reset();
-                    alert("بەرهەمەکە بە سەرکەوتوویی زیادکرا و وێنەکەی بوو بە ١٦:٩!");
+                    alert("بەرهەمەکە بە تەواوی ڕەسمەکەیەوە و بە بێ بەشخواردن زیادکرا!");
                     renderMenu();
                     renderAdminItemsList();
                 }
@@ -1262,7 +1253,7 @@
                 card.className = 'item-card glass-card';
                 card.onclick = () => openProductModal(i.id);
                 card.innerHTML = `
-                    <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800'}" class="w-full h-40 object-cover bg-amber-100" alt="${itemName}">
+                    <img src="${i.img || 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800'}" class="w-full h-44 object-contain bg-amber-50/50 p-1" alt="${itemName}">
                     <div class="p-3.5 flex-1 flex flex-col justify-between">
                         <div>
                             <div class="font-bold text-sm mb-1 text-[#3c1e0e]">${itemName}</div>
