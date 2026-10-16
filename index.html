@@ -708,40 +708,40 @@
         };
 
         let defaultMenuItems = [
-            // ☕ ئێسپڕێسۆ (ESPRESSO CATEGORY)
-            { id: '1', name_ckb: 'سنگڵ ئێسپڕێسۆ', name_en: 'Single Espresso', name_ar: 'إسبريسو سينجل', category: 'ئێسپڕێسۆ', price: '2,500', desc_ckb: 'قاوەی ئێسپڕێسۆی شۆتی تاک و خەست', desc_en: 'Rich and authentic single espresso shot', desc_ar: 'شوت إسبريسو غني وأصيل', img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400' },
-            { id: '2', name_ckb: 'دۆبڵ ئێسپڕێسۆ', name_en: 'Double Espresso', name_ar: 'إسبريسو دبل', category: 'ئێسپڕێسۆ', price: '3,000', desc_ckb: 'دوو شۆتی ئێسپڕێسۆی خەستی بێ شەکەر', desc_en: 'Double shot of concentrated strong espresso', desc_ar: 'جرعتان من الإسبريسو المركّز القوي', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
-            { id: '3', name_ckb: 'ئێسپڕێسۆ ماکیاتۆ', name_en: 'Espresso Macchiato', name_ar: 'إسبريسو ماكياتو', category: 'ئێسپڕێسۆ', price: '3,000', desc_ckb: 'ئێسپڕێسۆ لەگەڵ کەمێک کەفی شیری گەرم', desc_en: 'Espresso topped with a dollop of milk foam', desc_ar: 'إسبريسو مع لمسة من رغوة الحليب المبخر', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
-            { id: '4', name_ckb: 'ئێسپڕێسۆ کۆن پانا', name_en: 'Espresso Con Panna', name_ar: 'إسبريسو كون بانا', category: 'ئێسپڕێسۆ', price: '3,500', desc_ckb: 'ئێسپڕێسۆ لەگەڵ کرێمی تۆپکراوی شیلگێر', desc_en: 'Espresso shot topped with whipped cream', desc_ar: 'جرعة إسبريسو تعلوها الكريمة المخفوقة', img: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?w=400' },
-            { id: '5', name_ckb: 'ئایس ئێسپڕێسۆ شۆت', name_en: 'Iced Espresso Shot', name_ar: 'آيس إسبريسو شوت', category: 'ئێسپڕێسۆ', price: '3,000', desc_ckb: 'ئێسپڕێسۆی ساردکراوە بە بەفر', desc_en: 'Chilled espresso over clear ice cubes', desc_ar: 'إسبريسو بارد ومُنعش مع قطع الثلج', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
+            // ☕ ئێسپڕێسۆ
+            { id: '1', name: 'سنگڵ ئێسپڕێسۆ', name_en: 'Single Espresso', name_ar: 'إسبريسو سينجل', category: 'ئێسپڕێسۆ', price: '2,500', desc: 'قاوەی ئێسپڕێسۆی شۆتی تاک و خەست', img: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400' },
+            { id: '2', name: 'دۆبڵ ئێسپڕێسۆ', name_en: 'Double Espresso', name_ar: 'إسبريسو دبل', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'دوو شۆتی ئێسپڕێسۆی خەستی بێ شەکەر', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
+            { id: '3', name: 'ئێسپڕێسۆ ماکیاتۆ', name_en: 'Espresso Macchiato', name_ar: 'إسبريسو ماكياتو', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'ئێسپڕێسۆ لەگەڵ کەمێک کەفی شیری گەرم', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
+            { id: '4', name: 'ئێسپڕێسۆ کۆن پانا', name_en: 'Espresso Con Panna', name_ar: 'إسبريسو كون بانا', category: 'ئێسپڕێسۆ', price: '3,500', desc: 'ئێسپڕێسۆ لەگەڵ کرێمی تۆپکراوی شیلگێر', img: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?w=400' },
+            { id: '5', name: 'ئایس ئێسپڕێسۆ شۆت', name_en: 'Iced Espresso Shot', name_ar: 'آيس إسبريسو شوت', category: 'ئێسپڕێسۆ', price: '3,000', desc: 'ئێسپڕێسۆی ساردکراوە بە بەفر', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
 
-            // ☕ کافێ لەتێ (CAFFÈ LATTE CATEGORY)
-            { id: '6', name_ckb: 'کافێ لەتێی ڕەسەن', name_en: 'Classic Caffè Latte', name_ar: 'كافيه لاتيه كلاسيك', category: 'کافێ لەتێ', price: '3,500', desc_ckb: 'ئێسپڕێسۆ لەگەڵ شیری گەرم و کەف', desc_en: 'Smooth espresso with steamed milk and light foam', desc_ar: 'إسبريسو ناعم مع حليب مبخر ورغوة خفيفة', img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400' },
-            { id: '7', name_ckb: 'وەنیلا لەتێ', name_en: 'Vanilla Latte', name_ar: 'فانيليا لاتيه', category: 'کافێ لەتێ', price: '4,000', desc_ckb: 'کافێ لەتێ لەگەڵ سۆس و نەکەی وەنیلای فرێش', desc_en: 'Caffè latte infused with sweet vanilla syrup', desc_ar: 'كافيه لاتيه مع شراب الفانيليا اللذيذ', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
-            { id: '8', name_ckb: 'ئایس لەتێ (سارد)', name_en: 'Iced Latte', name_ar: 'آيس لاتيه بارد', category: 'کافێ لەتێ', price: '4,000', desc_ckb: 'قاوەی سارد لەگەڵ شیر و بەفر', desc_en: 'Chilled espresso with fresh cold milk & ice', desc_ar: 'قهوة باردة مع الحليب الطازج والثلج', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
-            { id: '9', name_ckb: 'فلات وایت (Flat White)', name_en: 'Flat White', name_ar: 'فلات وايت', category: 'کافێ لەتێ', price: '4,000', desc_ckb: 'دۆبڵ ئێسپڕێسۆ لەگەڵ شیری مایکرۆفۆمی گەرم', desc_en: 'Double shot espresso with silky microfoam milk', desc_ar: 'دبل إسبريسو مع حليب الميكروفوم الحريري', img: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=400' },
-            { id: '10', name_ckb: 'سۆڵتێد کارامێل لەتێ', name_en: 'Salted Caramel Latte', name_ar: 'سولتد كراميل لاتيه', category: 'کافێ لەتێ', price: '4,500', desc_ckb: 'کافێ لەتێ لەگەڵ کارامێلی سوێر کراو', desc_en: 'Latte topped with rich salted caramel sauce', desc_ar: 'لاتيه مع صوص الكراميل المملح الغني', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
+            // ☕ کافێ لەتێ
+            { id: '6', name: 'کافێ لەتێی ڕەسەن', name_en: 'Classic Caffè Latte', name_ar: 'كافيه لاتيه كلاسيك', category: 'کافێ لەتێ', price: '3,500', desc: 'ئێسپڕێسۆ لەگەڵ شیری گەرم و کەف', img: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400' },
+            { id: '7', name: 'وەنیلا لەتێ', name_en: 'Vanilla Latte', name_ar: 'فانيليا لاتيه', category: 'کافێ لەتێ', price: '4,000', desc: 'کافێ لەتێ لەگەڵ سۆس و نەکەی وەنیلای فرێش', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
+            { id: '8', name: 'ئایس لەتێ (سارد)', name_en: 'Iced Latte', name_ar: 'آيس لاتيه بارد', category: 'کافێ لەتێ', price: '4,000', desc: 'قاوەی سارد لەگەڵ شیر و بەفر', img: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400' },
+            { id: '9', name: 'فلات وایت (Flat White)', name_en: 'Flat White', name_ar: 'فلات وايت', category: 'کافێ لەتێ', price: '4,000', desc: 'دۆبڵ ئێسپڕێسۆ لەگەڵ شیری مایکرۆفۆمی گەرم', img: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=400' },
+            { id: '10', name: 'سۆڵتێد کارامێل لەتێ', name_en: 'Salted Caramel Latte', name_ar: 'سولتد كراميل لاتيه', category: 'کافێ لەتێ', price: '4,500', desc: 'کافێ لەتێ لەگەڵ کارامێلی سوێر کراو', img: 'https://images.unsplash.com/photo-1485808191679-5f86510681a2?w=400' },
 
             // ☕ قاوە
-            { id: '11', name_ckb: 'قاوەی تورکی', name_en: 'Turkish Coffee', name_ar: 'قهوة تركية', category: 'قاوە', price: '2,000', desc_ckb: 'قاوەی تورکی کەفدار و خەست', desc_en: 'Traditional roasted Turkish coffee', desc_ar: 'قهوة تركية تقليدية غنية بالرغوة', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
-            { id: '12', name_ckb: 'ئەمریکانۆ', name_en: 'Americano Coffee', name_ar: 'أمريكانو', category: 'قاوە', price: '3,000', desc_ckb: 'ئێسپڕێسۆی خاوێن لەگەڵ ئاوی گەرم', desc_en: 'Espresso diluted with hot water', desc_ar: 'إسبريسو مخفف بالماء الساخن', img: 'https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=400' },
+            { id: '11', name: 'قاوەی تورکی', name_en: 'Turkish Coffee', name_ar: 'قهوة تركية', category: 'قاوە', price: '2,000', desc: 'قاوەی تورکی کەفدار و خەست', img: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400' },
+            { id: '12', name: 'ئەمریکانۆ', name_en: 'Americano Coffee', name_ar: 'أمريكانو', category: 'قاوە', price: '3,000', desc: 'ئێسپڕێسۆی خاوێن لەگەڵ ئاوی گەرم', img: 'https://images.unsplash.com/photo-1551033406-611cf9a28f67?w=400' },
 
             // ☕ کاپوچینۆ
-            { id: '13', name_ckb: 'کاپوچینۆی ئیتالی', name_en: 'Italian Cappuccino', name_ar: 'كابوتشينو إيطالي', category: 'کاپوچینۆ', price: '3,500', desc_ckb: 'کاپوچینۆ لەگەڵ کەفی شیری تازە', desc_en: 'Classic cappuccino with rich milk foam', desc_ar: 'كابوتشينو كلاسيكي مع رغوة الحليب الغنية', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
-            { id: '14', name_ckb: 'کاپوچینۆی کارامێل', name_en: 'Caramel Cappuccino', name_ar: 'كابوتشينو كراميل', category: 'کاپوچینۆ', price: '4,000', desc_ckb: 'کاپوچینۆ لەگەڵ سۆسی کارامێلی نازک', desc_en: 'Cappuccino topped with sweet caramel sauce', desc_ar: 'كابوتشينو مع صوص الكراميل اللذيذ', img: 'https://images.unsplash.com/photo-1585495403337-781a70ff5f57?w=400' },
+            { id: '13', name: 'کاپوچینۆی ئیتالی', name_en: 'Italian Cappuccino', name_ar: 'كابوتشينو إيطالي', category: 'کاپوچینۆ', price: '3,500', desc: 'کاپوچینۆ لەگەڵ کەفی شیری تازە', img: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400' },
+            { id: '14', name: 'کاپوچینۆی کارامێل', name_en: 'Caramel Cappuccino', name_ar: 'كابوتشينو كراميل', category: 'کاپوچینۆ', price: '4,000', desc: 'کاپوچینۆ لەگەڵ سۆسی کارامێلی نازک', img: 'https://images.unsplash.com/photo-1585495403337-781a70ff5f57?w=400' },
 
             // 🍰 شیرینی
-            { id: '15', name_ckb: 'شیرینی بەقلاوە', name_en: 'Baklava', name_ar: 'بقلاوة بالفستق', category: 'شیرینی', price: '3,000', desc_ckb: 'بەقلاوەی فستقی بەتام و نازک', desc_en: 'Crispy pastry layers filled with pistachios', desc_ar: 'رقائق البقلاوة المليئة بالفستق الحلبي', img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400' },
-            { id: '16', name_ckb: 'واڵفڵ بە میوە', name_en: 'Fruit Waffle', name_ar: 'وافل بالمواكه', category: 'شیرینی', price: '5,000', desc_ckb: 'واڵفڵی گەرم لەگەڵ موز و ستۆبێری و شوکۆلاتە', desc_en: 'Fresh waffle with bananas, strawberries & chocolate', desc_ar: 'وافل طازج مع الموز والفراولة والشوكولاتة', img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400' },
+            { id: '15', name: 'شیرینی بەقلاوە', name_en: 'Baklava', name_ar: 'بقلاوة بالفستق', category: 'شیرینی', price: '3,000', desc: 'بەقلاوەی فستقی بەتام و نازک', img: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400' },
+            { id: '16', name: 'واڵفڵ بە میوە', name_en: 'Fruit Waffle', name_ar: 'وافل بالمواكه', category: 'شیرینی', price: '5,000', desc: 'واڵفڵی گەرم لەگەڵ موز و ستۆبێری و شوکۆلاتە', img: 'https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=400' },
 
             // 🎂 کێک
-            { id: '17', name_ckb: 'کێکی شوکۆلاتەی ڕەش', name_en: 'Dark Chocolate Cake', name_ar: 'كعكة الشوكولاتة الداكنة', category: 'کێک', price: '4,000', desc_ckb: 'کێکی شوکۆلاتەی خەستی گەرم', desc_en: 'Rich dark chocolate layer cake', desc_ar: 'كعكة الشوكولاتة الداكنة الغنية', img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400' },
-            { id: '18', name_ckb: 'چیزکێکی ستۆبێری', name_en: 'Strawberry Cheesecake', name_ar: 'تشيز كيك الفراولة', category: 'کێک', price: '4,500', desc_ckb: 'چیزکێکی کرێمی لەگەڵ سۆسی فرێشی ستۆبێری', desc_en: 'Creamy cheesecake topped with fresh strawberries', desc_ar: 'تشيز كيك كريمي مع الفراولة الطازجة', img: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400' },
-            { id: '19', name_ckb: 'کێکی ڕێد ڤێلڤێت', name_en: 'Red Velvet Cake', name_ar: 'كعكة ريد فيلفيت', category: 'کێک', price: '4,500', desc_ckb: 'کێکی سووری نەرم لەگەڵ کرێمی پەشێو', desc_en: 'Soft red velvet cake with cream cheese frosting', desc_ar: 'كعكة ريد فيلفيت ناعمة مع جبن الكريم', img: 'https://images.unsplash.com/photo-1616541861933-281b9542e8d3?w=400' },
+            { id: '17', name: 'کێکی شوکۆلاتەی ڕەش', name_en: 'Dark Chocolate Cake', name_ar: 'كعكة الشوكولاتة الداكنة', category: 'کێک', price: '4,000', desc: 'کێکی شوکۆلاتەی خەستی گەرم', img: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400' },
+            { id: '18', name: 'چیزکێکی ستۆبێری', name_en: 'Strawberry Cheesecake', name_ar: 'تشيز كيك الفراولة', category: 'کێک', price: '4,500', desc: 'چیزکێکی کرێمی لەگەڵ سۆسی فرێشی ستۆبێری', img: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=400' },
+            { id: '19', name: 'کێکی ڕێد ڤێلڤێت', name_en: 'Red Velvet Cake', name_ar: 'كعكة ريد فيلفيت', category: 'کێک', price: '4,500', desc: 'کێکی سووری نەرم لەگەڵ کرێمی پەشێو', img: 'https://images.unsplash.com/photo-1616541861933-281b9542e8d3?w=400' },
 
             // 🍦 ساردەمەنی
-            { id: '20', name_ckb: 'ئایس کریمی ڤانیلا', name_en: 'Vanilla Ice Cream', name_ar: 'آيس كريم فانيليا', category: 'ساردەمەنی', price: '2,500', desc_ckb: 'ساردەمەنی ڤانیلا لەگەڵ سۆسی شوکۆلاتە', desc_en: 'Classic vanilla scoops with chocolate drizzle', desc_ar: 'آيس كريم الفانيليا مع صوص الشوكولاتة', img: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?w=400' },
-            { id: '21', name_ckb: 'میکس ئایس کریم', name_en: 'Mixed Ice Cream Bowl', name_ar: 'آيس كريم مشكل', category: 'ساردەمەنی', price: '3,500', desc_ckb: 'سێ تۆپ ئایس کریمی جۆراوجۆر', desc_en: 'Three scoops of assorted flavors', desc_ar: 'ثلاث كرات من آيس كريم النكهات المشكلة', img: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400' }
+            { id: '20', name: 'ئایس کریمی ڤانیلا', name_en: 'Vanilla Ice Cream', name_ar: 'آيس كريم فانيليا', category: 'ساردەمەنی', price: '2,500', desc: 'ساردەمەنی ڤانیلا لەگەڵ سۆسی شوکۆلاتە', img: 'https://images.unsplash.com/photo-1560008581-09826d1de69e?w=400' },
+            { id: '21', name: 'میکس ئایس کریم', name_en: 'Mixed Ice Cream Bowl', name_ar: 'آيس كريم مشكل', category: 'ساردەمەنی', price: '3,500', desc: 'سێ تۆپ ئایس کریمی جۆراوجۆر', img: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400' }
         ];
 
         let menuItems = [];
@@ -924,7 +924,7 @@
             }
 
             menuItems.forEach(i => {
-                const itemName = i.name_ckb || i.name || 'بەرهەم';
+                const itemName = i.name || i.name_ckb || 'بەرهەم';
                 const row = document.createElement('div');
                 row.className = 'flex items-center justify-between p-2.5 bg-white/90 rounded-xl border border-[#8c5830]/20 text-xs shadow-sm hover:border-[#8c5830] transition';
                 row.innerHTML = `
@@ -965,7 +965,7 @@
             }
         }
 
-        // ADD ITEM VIA ADMIN
+        // ADD ITEM VIA ADMIN (Fixed to use standard columns 'name' and 'desc')
         const form = document.getElementById('itemForm');
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -989,7 +989,7 @@
                 if(window.supabase) {
                     const { error } = await window.supabase
                         .from('menu_items')
-                        .insert([{ name_ckb: name, category, price, desc_ckb: desc, img: base64Img }]);
+                        .insert([{ name: name, category, price, desc: desc, img: base64Img }]);
 
                     if (error) {
                         alert('هەڵە لە زیادکردن: ' + error.message);
@@ -1002,7 +1002,7 @@
                 } else {
                     const newItem = {
                         id: Date.now().toString(),
-                        name_ckb: name, category, price, desc_ckb: desc, img: base64Img
+                        name: name, category, price, desc: desc, img: base64Img
                     };
                     menuItems.push(newItem);
                     form.reset();
@@ -1057,7 +1057,7 @@
             let totalSum = 0;
 
             cart.forEach(i => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name_ckb || i.name));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
                 const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
                 const itemTotal = numericPrice * i.qty;
                 totalSum += itemTotal;
@@ -1083,7 +1083,7 @@
             const currentTable = localStorage.getItem('coffee_table_num') || t.notSet;
             let itemsSummary = [];
             cart.forEach(i => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name_ckb || i.name));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
                 const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
                 const itemTotal = numericPrice * i.qty;
                 itemsSummary.push(`${i.qty}x ${itemName} (${itemTotal.toLocaleString()} ${t.currency})`);
@@ -1114,7 +1114,7 @@
             let totalSum = 0;
 
             cart.forEach((i, idx) => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name_ckb || i.name));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
                 const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
                 const itemTotal = numericPrice * i.qty;
                 totalSum += itemTotal;
@@ -1211,8 +1211,8 @@
 
             if(query) {
                 list = list.filter(i => {
-                    const name = (i.name_ckb || i.name || '').toLowerCase();
-                    const desc = (i.desc_ckb || i.desc || '').toLowerCase();
+                    const name = (i.name || i.name_ckb || '').toLowerCase();
+                    const desc = (i.desc || i.desc_ckb || '').toLowerCase();
                     return name.includes(query) || desc.includes(query);
                 });
             }
@@ -1223,8 +1223,8 @@
             }
 
             list.forEach(i => {
-                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name_ckb || i.name));
-                const itemDesc = currentLang === 'en' ? (i.desc_en || i.desc || i.desc_ckb) : (currentLang === 'ar' ? (i.desc_ar || i.desc || i.desc_ckb) : (i.desc_ckb || i.desc));
+                const itemName = currentLang === 'en' ? (i.name_en || i.name || i.name_ckb) : (currentLang === 'ar' ? (i.name_ar || i.name || i.name_ckb) : (i.name || i.name_ckb));
+                const itemDesc = currentLang === 'en' ? (i.desc_en || i.desc || i.desc_ckb) : (currentLang === 'ar' ? (i.desc_ar || i.desc || i.desc_ckb) : (i.desc || i.desc_ckb));
 
                 const card = document.createElement('div');
                 card.className = 'item-card glass-card';
