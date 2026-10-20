@@ -645,9 +645,6 @@
             <button class="bg-[#6b3e23] text-white px-3 py-1.5 rounded-lg cursor-pointer font-bold hover:bg-[#522e1b] transition flex items-center gap-1" id="tableIndicator" onclick="openTableModal()">
                 <i class="fa-solid fa-chair ml-1"></i> <span id="txtTableLabel">مێز:</span> <span id="txtTableNum">دیاری نەکراوە</span>
             </button>
-            <button class="bg-[#6b3e23] text-white px-3 py-1.5 rounded-lg cursor-pointer font-bold hover:bg-[#522e1b] transition flex items-center gap-1" onclick="openTableModal()">
-                <i class="fa-solid fa-plus ml-1"></i> <span id="txtAddTable">زیادکردنی مێز</span>
-            </button>
             <button class="bg-[#522e1b] text-white px-3 py-1.5 rounded-lg cursor-pointer font-bold hover:bg-[#3b2012] transition flex items-center gap-1" onclick="printCartInvoice()" id="txtBtnPrintTop">
                 <i class="fa-solid fa-print ml-1"></i> چاپکردنی وەسڵ
             </button>
@@ -712,9 +709,9 @@
                 <i class="fa-solid fa-bell"></i> <span id="txtCallWaiter">بانگکردنی گارسۆن (کاپتن)</span>
             </button>
             
-            <!-- Ask for Bill Sent to Cashier -->
+            <!-- Ask for Bill Sent to Cashier with Cart Items -->
             <button class="bg-amber-700 hover:bg-amber-800 text-white border-none px-5 py-2.5 rounded-xl font-bold text-xs shadow-lg cursor-pointer transition flex items-center gap-2" onclick="requestBill()">
-                <i class="fa-solid fa-[#d4a373] fa-file-invoice-dollar"></i> <span id="txtRequestBill">داواکردنی حیساب (کاشێر)</span>
+                <i class="fa-solid fa-file-invoice-dollar"></i> <span id="txtRequestBill">داواکردنی حیساب (کاشێر)</span>
             </button>
         </div>
 
@@ -1029,7 +1026,6 @@
             document.getElementById('txtBtnPrintTop').innerHTML = `<i class="fa-solid fa-print ${isRtl ? 'ml-1' : 'mr-1'}"></i> ${t.btnPrintTop}`;
             document.getElementById('txtBtnWhatsapp').innerText = t.btnWhatsapp;
             document.getElementById('txtTableLabel').innerText = t.tableLabel;
-            document.getElementById('txtAddTable').innerText = t.addTable;
             document.getElementById('txtAdminBtn').innerText = t.adminBtn;
             document.getElementById('txtMarquee').innerText = t.marquee;
             document.getElementById('txtMainHeading').innerText = t.mainHeading;
@@ -1405,12 +1401,11 @@
             updateCartUI();
         }
 
+        // سڕینەوەی ڕاستەوخۆی سەبەتەکە بێ دەرکەوتنی ئاگادارکردنەوە و بێ هیچ Confirmـێک
         function clearCart() {
-            if(confirm("دڵنیایت لە خاڵیکردنەوەی سەبەتەکە؟")) {
-                cart = [];
-                updateCartUI();
-                showToast("سەبەتەکەت خاڵی کرایەوە");
-            }
+            cart = [];
+            updateCartUI();
+            showToast("سەبەتەکەت خاڵی کرایەوە");
         }
 
         function updateCartUI() {
@@ -1477,7 +1472,7 @@
 
             const encodedMessage = encodeURIComponent(whatsappMessage);
             
-            // داواکارییەکان (Orders) هەردەم بۆ کاپتن (phoneSettings.captain) دەچن
+            // داواکارییەکان (Orders) هەردەم بۆ کاپتن دەچن
             document.getElementById('whatsappSendLink').href = `https://wa.me/${phoneSettings.captain || '9647517283166'}?text=${encodedMessage}`;
         }
 
@@ -1527,12 +1522,40 @@
             window.open(`https://wa.me/${phoneSettings.captain || '9647517283166'}?text=${message}`, '_blank');
         }
 
-        // 2. داواکردنی حیساب (Ask for Bill) -> ڕاستەوخۆ دەچێت بۆ کاشێر
+        // 2. داواکردنی حیساب (Ask for Bill) -> ڕاستەوخۆ دەچێت بۆ کاشێر لەگەڵ لیست و کۆی گشتی بەرهەمە داواکراوەکان
         function requestBill() {
             const currentTable = localStorage.getItem('coffee_table_num') || translations[currentLang].notSet;
-            const message = encodeURIComponent(`💳 *داواکردنی حیساب / وەسڵ (کاشێر)*\nتکایە وەسڵی مێز ژمارە (${currentTable}) ئامادە بکەن.`);
-            
-            window.open(`https://wa.me/${phoneSettings.cashier || '9647517283166'}?text=${message}`, '_blank');
+            const selectedType = document.querySelector('input[name="orderType"]:checked')?.value || 'Dine-in';
+            const t = translations[currentLang];
+
+            if(cart.length === 0) {
+                // ئەگەر سەبەتەکەش خاڵی بوو، تەنها داوای حیسابی مێزەکەی بۆ دەنێرێت
+                const message = encodeURIComponent(`💳 *داواکردنی حیساب / وەسڵ (کاشێر)*\n📍 مێز: (${currentTable})\nتکایە وەسڵی ئەم مێزە ئامادە بکەن.`);
+                window.open(`https://wa.me/${phoneSettings.cashier || '9647517283166'}?text=${message}`, '_blank');
+                return;
+            }
+
+            let itemsSummary = [];
+            let totalSum = 0;
+
+            cart.forEach(i => {
+                const itemName = currentLang === 'en' ? (i.name_en || i.name) : (currentLang === 'ar' ? (i.name_ar || i.name) : i.name);
+                const numericPrice = parseFloat(String(i.price).replace(/[^\d.]/g, '')) || 0;
+                const itemTotal = numericPrice * i.qty;
+                totalSum += itemTotal;
+                const noteStr = i.note ? ` [تێبینی: ${i.note}]` : '';
+                itemsSummary.push(`${i.qty}x ${itemName}${noteStr} (${itemTotal.toLocaleString()} ${t.currency})`);
+            });
+
+            let message = `💳 *داواکردنی حیساب و وەسڵ (کاشێر)*\n`;
+            message += `📍 مێز: (${currentTable})\n`;
+            message += `📦 جۆر: (${selectedType === 'Dine-in' ? 'لەناو قاوەخانە' : 'سەفەری / Takeaway'})\n\n`;
+            message += `📋 وردەکاری داواکارییەکان:\n` + itemsSummary.join('\n') + `\n\n`;
+            message += `💰 کۆی گشتی حیساب: ${totalSum.toLocaleString()} ${t.currency}\n\n`;
+            message += `تکایە وەسڵەکە ئامادە بکەن. سوپاس!`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneSettings.cashier || '9647517283166'}?text=${encodedMessage}`, '_blank');
         }
 
         async function initApp() {
